@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>moon_toolkit 项目申报书</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0 }
+  body { font-family: "SimSun", "Microsoft YaHei", serif; width: 210mm; margin: 0 auto; padding: 8mm 10mm 5mm; line-height: 1.5; color: #222; font-size: 12px }
+  h1 { text-align: center; font-size: 16pt; margin-bottom: 8px; font-weight: 700; border-bottom: 2px solid #4CAF50; padding-bottom: 5px }
+  h2 { font-size: 13pt; color: #2e7d32; border-left: 3px solid #4CAF50; padding: 2px 0 2px 7px; margin: 7px 0 4px; background: #f1f8e9; font-weight: 600 }
+  table { border-collapse: collapse; width: 100%; margin: 4px 0; font-size: 12px }
+  th, td { border: 1px solid #bbb; padding: 3px 7px; text-align: left; vertical-align: top }
+  th { background: #eee; width: 130px; white-space: nowrap; font-weight: 600; font-size: 11pt }
+  code { background: #e8f5e9; color: #1b5e20; padding: 0 3px; border-radius: 2px; font-size: 11pt }
+  ul { padding-left: 16px; margin: 2px 0 }
+  li { margin: 1px 0; font-size: 12px }
+  p { margin: 3px 0; font-size: 12px }
+  .tag { display: inline-block; background: #e8f5e9; color: #2e7d32; padding: 0 4px; border-radius: 2px; font-size: 10pt; font-weight: 600; margin-right: 3px; border: 1px solid #c8e6c9 }
+  .pass { color: #2e7d32; font-weight: 600; font-size: 12px }
+  .algo { font-size: 11pt; margin: 1px 0; padding: 0 }
+  @page { size: A4; margin: 10mm }
+  @media print { body { padding: 5mm 8mm } }
+</style>
+</head>
+<body>
+
+<h1>moon_toolkit 项目申报书</h1>
+
+<table>
+  <tr><th>项目名称</th><td><b>moon_toolkit</b> — MoonBit 通用图算法工具箱</td></tr>
+  <tr><th>参赛者</th><td>徐健凯</td></tr>
+  <tr><th>联系方式</th><td>18688611879</td></tr>
+  <tr><th>GitHub</th><td>https://github.com/OldPigxjk/moon_toolkit</td></tr>
+  <tr><th>GitLink</th><td>https://www.gitlink.org.cn/oldpig/moon_toolkit</td></tr>
+  <tr><th>mooncakes.io</th><td>https://mooncakes.io/packages/OldPigxjk/moon_toolkit</td></tr>
+  <tr><th>项目方向</th><td>MoonBit 图算法库 / 算法教育工具</td></tr>
+  <tr><th>原创性</th><td>原创实现，非对 MoonBit 生态已有项目的移植</td></tr>
+  <tr><th>许可证</th><td>Apache-2.0（OSI 认证）</td></tr>
+  <tr><th>有效 commit</th><td>20 个（符合 10–20 要求）</td></tr>
+</table>
+
+<h2>项目简介</h2>
+<p>moon_toolkit 是用 MoonBit 编写的通用图算法工具箱，提供完整的基础数据结构与图算法实现。面向三类使用者：MoonBit 学习者（通过阅读泛型图、MinHeap、Union-Find 实现理解 MoonBit 类型系统）、算法竞赛准备者（15 种经典算法，可对照 CLRS 教材学习）、MoonBit 项目开发者（直接引用 moon.mod 作为依赖）。所有算法附完整单元测试（50 个测试全部通过）。</p>
+
+<h2>差异化亮点（mooncakes.io 竞品无）</h2>
+<ul>
+  <li><span class="tag">独有</span>Prim / Kruskal 最小生成树（MST）—— 网络设计基础</li>
+  <li><span class="tag">独有</span>Dinic 最大流 —— O(VE²)，比 Edmonds-Karp 更高效</li>
+  <li><span class="tag">独有</span>Floyd-Warshall 全源最短路 —— O(V³)</li>
+  <li><span class="tag">独有</span>Kuhn 二分图最大匹配 —— 任务分配问题基础</li>
+  <li><span class="tag">独有</span>Hierholzer 欧拉路/回路 —— 一笔画问题</li>
+  <li><span class="tag">独有</span>Tarjan 割点 & 桥检测 —— 无向图连通性分析</li>
+</ul>
+
+<h2>核心功能（15 种算法）</h2>
+<p style="font-size:11pt"><b>基础数据结构：</b>MinHeap（泛型最小堆）、UnionFind（并查集）｜
+<b>图模型：</b>Graph[N,E]（泛型邻接表）｜
+<b>图遍历：</b>BFS、DFS、拓扑排序（Kahn+DFS 双实现）、Tarjan SCC、割点&桥、二分图匹配、欧拉路｜
+<b>最短路径：</b>Dijkstra、Bellman-Ford、Floyd-Warshall｜
+<b>最小生成树：</b>Prim（MinHeap）、Kruskal（UnionFind）｜
+<b>网络最大流：</b>Edmonds-Karp、Dinic（BFS分层+DFS阻塞流）</p>
+
+<h2>移植或参考说明</h2>
+<p>本项目为原创实现，非对现有 MoonBit 生态项目的移植。算法原理参考 CLRS《算法导论》（第3版）及 Tarjan 原始论文，独立用 MoonBit 编写，未复制任何现有开源项目的源代码。与 mooncakes.io 现有项目（MoonGraph、moonpath）相比，新增 6 个竞品没有的算法，具有独立贡献价值。</p>
+
+<h2>交付与合规</h2>
+<ul>
+  <li><span class="pass">✓</span> 以 MoonBit 为主要实现语言（全部 .mbt 文件）</li>
+  <li><span class="pass">✓</span> GitHub + GitLink 仓库公开，提交记录清晰（20 个实质性 commit）</li>
+  <li><span class="pass">✓</span> 源代码结构清晰，50/50 测试通过</li>
+  <li><span class="pass">✓</span> 提供 README（安装方式、使用方法、示例）</li>
+  <li><span class="pass">✓</span> 使用 CI（GitHub Actions）覆盖检查+构建+测试</li>
+  <li><span class="pass">✓</span> 提供可运行示例（examples/ 目录）</li>
+  <li><span class="pass">✓</span> 已发布到 mooncakes.io（2026-07-04）</li>
+  <li><span class="pass">✓</span> Apache-2.0 许可证（OSI 认证）</li>
+</ul>
+
+<p style="text-align:right; margin-top:8px; font-size:10pt; color:#888">生成时间：2026-07-04</p>
+</body>
+</html>
