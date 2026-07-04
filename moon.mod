@@ -1,6 +1,6 @@
 name = "OldPigxjk/moon_toolkit"
 
-version = "0.1.0"
+version = "0.1.1"
 
 description = "MoonBit general graph algorithm toolkit"
 
