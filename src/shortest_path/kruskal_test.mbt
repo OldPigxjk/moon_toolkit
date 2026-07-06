@@ -29,7 +29,7 @@ test "kruskal_mst_basic" {
       }
       assert_eq(total_weight, 3) // 1 + 2 = 3
     }
-    None => fail!("Expected Some(mst_edges), got None")
+    None => fail("Expected Some(mst_edges), got None")
   }
 }
 
@@ -44,7 +44,7 @@ test "kruskal_mst_single_node" {
       // Single node, no edges
       assert_eq(mst_edges.length(), 0)
     }
-    None => fail!("Expected Some(mst_edges), got None")
+    None => fail("Expected Some(mst_edges), got None")
   }
 }
 
@@ -58,7 +58,7 @@ test "kruskal_mst_disconnected" {
   let result = kruskal_mst(g)
   // Graph is disconnected, should return None
   match result {
-    Some(_) => fail!("Expected None (disconnected), got Some(mst_edges)")
+    Some(_) => fail("Expected None (disconnected), got Some(mst_edges)")
     None => () // Expected
   }
 }

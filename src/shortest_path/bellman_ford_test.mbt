@@ -19,7 +19,7 @@ test "bellman_ford_basic" {
       assert_eq(dist[1], 1)
       assert_eq(dist[2], 3) // 0->1->2 = 1+2 = 3
     }
-    None => fail!("Expected Some((dist, pred)), got None")
+    None => fail("Expected Some((dist, pred)), got None")
   }
 }
 
@@ -43,7 +43,7 @@ test "bellman_ford_negative_weight" {
       assert_eq(dist[1], 1)
       assert_eq(dist[2], -2) // 0->1->2 = 1 + (-3) = -2
     }
-    None => fail!("Expected Some((dist, pred)), got None")
+    None => fail("Expected Some((dist, pred)), got None")
   }
 }
 
@@ -60,7 +60,7 @@ test "bellman_ford_negative_cycle" {
   let result = bellman_ford(g, 0)
   // Should detect negative cycle and return None
   match result {
-    Some(_) => fail!("Expected None (negative cycle), got Some((dist, pred))")
+    Some(_) => fail("Expected None (negative cycle), got Some((dist, pred))")
     None => () // Expected
   }
 }

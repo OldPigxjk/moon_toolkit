@@ -20,7 +20,7 @@ test "edmonds_karp_basic" {
   let result = edmonds_karp(g, 0, 3)
   match result {
     Some(flow) => assert_eq(flow, 12) // Max flow should be 12
-    None => fail!("Expected Some(flow), got None")
+    None => fail("Expected Some(flow), got None")
   }
 }
 
@@ -34,7 +34,7 @@ test "edmonds_karp_no_path" {
   let result = edmonds_karp(g, 0, 1)
   match result {
     Some(flow) => assert_eq(flow, 0) // No path, flow should be 0
-    None => fail!("Expected Some(0), got None")
+    None => fail("Expected Some(0), got None")
   }
 }
 
@@ -50,6 +50,6 @@ test "edmonds_karp_single_edge" {
   let result = edmonds_karp(g, 0, 1)
   match result {
     Some(flow) => assert_eq(flow, 5) // Max flow should be 5
-    None => fail!("Expected Some(5), got None")
+    None => fail("Expected Some(5), got None")
   }
 }

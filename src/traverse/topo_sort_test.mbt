@@ -22,7 +22,7 @@ test "topo_sort_basic" {
       let pos2 = array_index_of(order, 2)
       assert_true(pos0 < pos1 && pos1 < pos2)
     }
-    None => fail!("Expected Some(order), got None")
+    None => fail("Expected Some(order), got None")
   }
 }
 
@@ -62,7 +62,7 @@ test "topo_sort_dag" {
       assert_true(pos0 < pos1 && pos0 < pos2)
       assert_true(pos1 < pos3 && pos2 < pos3)
     }
-    None => fail!("Expected Some(order), got None")
+    None => fail("Expected Some(order), got None")
   }
 }
 
@@ -81,7 +81,7 @@ test "topo_sort_cycle" {
   let result = topo_kahn(g)
   // Should detect cycle and return None
   match result {
-    Some(_) => fail!("Expected None (cycle), got Some(order)")
+    Some(_) => fail("Expected None (cycle), got Some(order)")
     None => () // Expected
   }
 }

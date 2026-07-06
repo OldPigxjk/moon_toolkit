@@ -1,9 +1,9 @@
 ///|
 test "graph_creation" {
   let g : Graph[Int, Int] = Graph::new()
-  let n0 = g.add_node(10)
-  let n1 = g.add_node(20)
-  let n2 = g.add_node(30)
+  let _ = g.add_node(10)
+  let _ = g.add_node(20)
+  let _ = g.add_node(30)
   assert_eq(g.node_count(), 3)
   assert_eq(g.edge_count(), 0)
 }
