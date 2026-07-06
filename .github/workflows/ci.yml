@@ -14,7 +14,7 @@ jobs:
 
       - name: Install MoonBit
         run: |
-          curl -fsSL https://moonbitlang.com/install/moonbit-install.sh | bash
+          curl -fsSL https://cli.moonbitlang.cn/install/unix.sh | bash
           echo "$HOME/.moon/bin" >> $GITHUB_PATH
 
       - name: Check
