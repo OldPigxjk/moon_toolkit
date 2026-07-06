@@ -5,3 +5,7 @@ _build/
 **/node_modules/
 **/.DS_Store
 **/Thumbs.db
+
+# Session helper scripts (not part of the library)
+do_commits.sh
+push_via_api.py
