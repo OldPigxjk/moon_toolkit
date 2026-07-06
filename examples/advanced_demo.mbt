@@ -1,113 +1,297 @@
 // examples/advanced_demo.mbt
-// 高级图算法使用示例：MST、最大流、二分图匹配、欧拉路
+// 高级图算法使用示例 — MST、最大流、二分图匹配、欧拉路、图工具函数
 //
-// 作为参考阅读，展示核心 API 调用方式
+// 本文件演示 moon_toolkit 中高级算法的实际调用方式。
+// 所有示例使用 @graph.Graph::new() 创建图，通过 add_node/add_edge 构建拓扑。
+//
+// 作为参考阅读，展示核心 API 调用方式。
 
 fn main {
-  println("=== 高级算法示例 ===\n")
+  println("=== MoonBit 图算法工具箱 — 高级算法示例 ===\n")
 
-  demo_mst()
+  demo_prim_mst()
+  demo_kruskal_mst()
   demo_max_flow()
   demo_bipartite_matching()
   demo_eulerian_path()
+  demo_graph_utils()
 }
 
-fn demo_mst() {
-  println("--- 最小生成树 (Prim) ---")
-  // 无向加权图
-  let mut g = graph::create_graph[Int, Int](5, false)
+/// Prim 算法：最小生成树（基于二叉堆优化）
+fn demo_prim_mst() {
+  println("--- Prim 最小生成树 ---")
 
-  g.add_edge(0, 1, 2)
-  g.add_edge(0, 3, 6)
-  g.add_edge(1, 2, 3)
-  g.add_edge(1, 3, 8)
-  g.add_edge(1, 4, 5)
-  g.add_edge(2, 4, 7)
-  g.add_edge(3, 4, 9)
+  // 无向加权图（每条无向边存为两条方向相反的有向边）
+  let g : @graph.Graph[Int, Int] = @graph.Graph::new()
+  let _ = g.add_node(0)
+  let _ = g.add_node(0)
+  let _ = g.add_node(0)
+  let _ = g.add_node(0)
+  let _ = g.add_node(0)
 
-  match prim::prim(g, 0) {
-    Some(result) => {
-      println("MST 总权重: \{result.total_weight}")
-      println("MST 边数: \{result.edges.length}")
+  // 无向边: 0-1(2), 0-3(6), 1-2(3), 1-3(8), 1-4(5), 2-4(7), 3-4(9)
+  let _ = g.add_edge(0, 1, 2)
+  let _ = g.add_edge(1, 0, 2)
+  let _ = g.add_edge(0, 3, 6)
+  let _ = g.add_edge(3, 0, 6)
+  let _ = g.add_edge(1, 2, 3)
+  let _ = g.add_edge(2, 1, 3)
+  let _ = g.add_edge(1, 3, 8)
+  let _ = g.add_edge(3, 1, 8)
+  let _ = g.add_edge(1, 4, 5)
+  let _ = g.add_edge(4, 1, 5)
+  let _ = g.add_edge(2, 4, 7)
+  let _ = g.add_edge(4, 2, 7)
+  let _ = g.add_edge(3, 4, 9)
+  let _ = g.add_edge(4, 3, 9)
+
+  match prim_mst(g) {
+    Some(mst_edges) => {
+      let mut total_weight = 0
+      for i = 0; i < mst_edges.length(); i = i + 1 {
+        let (u, v, w) = mst_edges[i]
+        total_weight = total_weight + w
+        println("  边 {u} -- {v} (权重 {w})")
+      }
+      println("MST 总权重: {total_weight}, 边数: {mst_edges.length()}")
     }
     None => println("图不连通，不存在 MST!")
   }
   println("")
 }
 
-fn demo_max_flow() {
-  println("--- 最大流 (Dinic) ---")
-  // 流网络: 0=源点, 3=汇点
-  let mut g = graph::create_graph[Int, Int](4, true)
+/// Kruskal 算法：最小生成树（基于并查集 + 排序）
+fn demo_kruskal_mst() {
+  println("--- Kruskal 最小生成树 ---")
 
-  g.add_edge(0, 1, 10)   // s→a 容量10
-  g.add_edge(0, 2, 10)   // s→b 容量10
-  g.add_edge(1, 2, 2)    // a→b 容量2
-  g.add_edge(1, 3, 7)    // a→t 容量7
-  g.add_edge(2, 3, 9)    // b→t 容量9
+  // 使用同一张无向图对比 Kruskal 结果
+  let g : @graph.Graph[Int, Int] = @graph.Graph::new()
+  let _ = g.add_node(0)
+  let _ = g.add_node(0)
+  let _ = g.add_node(0)
+  let _ = g.add_node(0)
 
-  match dinic::dinic(g, 0, 3) {
-    Some(flow) => println("从节点 0 到节点 3 的最大流: \{flow}")
-    None => println("计算失败（可能存在反向边问题）")
+  let _ = g.add_edge(0, 1, 10)
+  let _ = g.add_edge(1, 0, 10)
+  let _ = g.add_edge(0, 2, 6)
+  let _ = g.add_edge(2, 0, 6)
+  let _ = g.add_edge(0, 3, 5)
+  let _ = g.add_edge(3, 0, 5)
+  let _ = g.add_edge(1, 2, 3)
+  let _ = g.add_edge(2, 1, 3)
+  let _ = g.add_edge(2, 3, 2)
+  let _ = g.add_edge(3, 2, 2)
+
+  match kruskal_mst(g) {
+    Some(mst_edges) => {
+      let mut total_weight = 0
+      for i = 0; i < mst_edges.length(); i = i + 1 {
+        let (_, _, w) = mst_edges[i]
+        total_weight = total_weight + w
+      }
+      println("Kruskal MST 总权重: {total_weight}, 边数: {mst_edges.length()}")
+    }
+    None => println("Kruskal: 不连通")
   }
 
-  // 对比 Edmonds-Karp 结果
-  match edmonds_karp::edmonds_karp(g, 0, 3) {
-    Some(flow) => println("Edmonds-Karp 验证结果: \{flow} （应与 Dinic 一致）")
+  // 单节点测试
+  let g_single : @graph.Graph[Int, Int] = @graph.Graph::new()
+  let _ = g_single.add_node(42)
+  match kruskal_mst(g_single) {
+    Some(edges) => println("单节点图 MST: {edges.length()} 条边 ✓")
+    None => println("错误！单节点应返回空 MST")
+  }
+  println("")
+}
+
+/// Dinic / Edmonds-Karp 最大流算法
+fn demo_max_flow() {
+  println("--- 最大流算法 ---")
+
+  // 流网络经典示例: s=0, a=1, b=2, t=3
+  let g : @graph.Graph[Int, Int] = @graph.Graph::new()
+  let _ = g.add_node(0)  // s (源点)
+  let _ = g.add_node(0)  // a
+  let _ = g.add_node(0)  // b
+  let _ = g.add_node(0)  // t (汇点)
+
+  // 正向边容量
+  let _ = g.add_edge(0, 1, 10)   // s→a 容量10
+  let _ = g.add_edge(0, 2, 10)   // s→b 容量10
+  let _ = g.add_edge(1, 2, 2)    // a→b 容量2
+  let _ = g.add_edge(1, 3, 7)    // a→t 容量7
+  let _ = g.add_edge(2, 3, 9)    // b→t 容量9
+
+  // Dinic 最大流
+  let dinic_result = dinic_max_flow(g, 0, 3)
+  match dinic_result {
+    Some(flow) => println("Dinic 最大流 (s→t): {flow}")
+    None => println("Dinic 计算失败")
+  }
+
+  // Edmonds-Karp 验证（结果应与 Dinic 一致）
+  let ek_result = edmonds_karp(g, 0, 3)
+  match ek_result {
+    Some(flow) => println("Edmonds-Karp 验证: {flow} (应等于 Dinic)")
+    None => {}
+  }
+
+  // 无路径测试
+  let g_empty : @graph.Graph[Int, Int] = @graph.Graph::new()
+  let _ = g_empty.add_node(0)
+  let _ = g_empty.add_node(0)
+  let empty_flow = dinic_max_flow(g_empty, 0, 1)
+  match empty_flow {
+    Some(f) => assert_eq(f, 0)
     None => {}
   }
   println("")
 }
 
+/// Kuhn 二分图最大匹配
 fn demo_bipartite_matching() {
-  println("--- 二分图最大匹配 ---")
+  println("--- 二分图最大匹配 (Kuhn 算法) ---")
 
   // 左侧 3 个节点，右侧 4 个节点
   // 邻接表: 左侧 i → 可匹配的右侧节点列表
-  let adj: Array[Array[Int]] = [
-    [1, 0, 1, 0],   // 左0 → 右0, 右2
-    [1, 1, 0, 0],   // 左1 → 右0, 右1
-    [0, 0, 1, 0],   // 左2 → 右2
+  let adj : Array[Array[Int]] = [
+    [0, 2],   // 左0 → 右0, 右2
+    [0, 1],   // 左1 → 右0, 右1
+    [2],      // 左2 → 右2
   ]
 
-  let (match_r, count) = bipartite::kuhn(adj, 3, 4)
-  println("最大匹配数: \{count}")
-  print("右侧匹配情况: ")
-  for j = 0; j < match_r.length; j = j + 1 {
-    if (match_r[j] >= 0) { print("右\{j}←左\{match_r[j]} ") }
+  let (match_r, count) = kuhn_bipartite_match(adj, 3, 4)
+  println("左侧 3 节点 × 右侧 4 节点")
+  println("最大匹配数: {count}")
+
+  if count > 0 {
+    print("匹配情况: ")
+    for j = 0; j < match_r.length(); j = j + 1 {
+      if match_r[j] >= 0 {
+        print("右{j}<-左{match_r[j]} ")
+      } else {
+        print("右{j}-未匹配 ")
+      }
+    }
+    println("")
   }
-  println("")
+
+  // 完全匹配测试
+  let adj_full : Array[Array[Int]] = [
+    [0, 1],   // L0 → R0, R1
+    [0, 1],   // L1 → R0, R1
+  ]
+  let (_, cnt) = kuhn_bipartite_match(adj_full, 2, 2)
+  println("完全匹配测试 (2x2): 匹配数={cnt} (期望 2)")
+
   println("")
 }
 
+/// Hierholzer 欧拉路/回路检测
 fn demo_eulerian_path() {
-  println("--- 欧拉路/回路检测 ---")
+  println("--- 欧拉路/回路检测 (Hierholzer) ---")
 
-  // 欧拉回路示例（每个顶点度数均为偶数）
-  let mut g1 = graph::create_graph[Int, Int](4, true)
-  g1.add_edge(0, 1, 1)
-  g1.add_edge(1, 2, 1)
-  g1.add_edge(2, 3, 1)
-  g1.add_edge(3, 0, 1)
-  g1.add_edge(0, 2, 1)
-  g1.add_edge(2, 0, 1)
+  // 有向图欧拉回路示例（每个顶点入度=出度）
+  let g1 : @graph.Graph[Int, Int] = @graph.Graph::new()
+  let _ = g1.add_node(0)
+  let _ = g1.add_node(0)
+  let _ = g1.add_node(0)
+  let _ = g1.add_node(0)
 
-  match eulerian::find_eulerian(g1) {
+  let _ = g1.add_edge(0, 1, 1)
+  let _ = g1.add_edge(1, 2, 1)
+  let _ = g1.add_edge(2, 3, 1)
+  let _ = g1.add_edge(3, 0, 1)
+  let _ = g1.add_edge(0, 2, 1)
+  let _ = g1.add_edge(2, 0, 1)
+
+  match eulerian_trail(g1) {
     Some(path) => {
-      println("欧拉路径长度: \{path.length}")
-      println("欧拉路径: \{path.to_string()}")
+      println("有向图欧拉回路: 长度={path.length()}, 节点序列:")
+      print("  [")
+      for k = 0; k < path.length(); k = k + 1 {
+        print("{path[k]}")
+        if k < path.length() - 1 { print(" -> ") }
+      }
+      println("]")
     }
     None => println("不存在欧拉路/回路!")
   }
 
-  // 无向图欧拉路
-  let mut g2 = graph::create_graph[Int, Int](3, false)
-  g2.add_edge(0, 1, 1)
-  g2.add_edge(1, 2, 1)
-  g2.add_edge(0, 2, 1)
+  // 无向图（用双向边模拟）欧拉路
+  let g2 : @graph.Graph[Int, Int] = @graph.Graph::new()
+  let _ = g2.add_node(0)
+  let _ = g2.add_node(0)
+  let _ = g2.add_node(0)
 
-  match eulerian::find_eulerian(g2) {
-    Some(path) => println("无向图欧拉路: \{path.to_string()}")
+  let _ = g2.add_edge(0, 1, 1)
+  let _ = g2.add_edge(1, 0, 1)
+  let _ = g2.add_edge(1, 2, 1)
+  let _ = g2.add_edge(2, 1, 1)
+  let _ = g2.add_edge(0, 2, 1)
+  let _ = g2.add_edge(2, 0, 1)
+
+  match eulerian_trail(g2) {
+    Some(path) => println("无向图欧拉路: 长度={path.length()} ✓")
     None => println("无向图: 不存在欧拉路")
   }
+
+  // 不存在欧拉路的图（奇度顶点 > 2）
+  let g_no : @graph.Graph[Int, Int] = @graph.Graph::new()
+  let _ = g_no.add_node(0)
+  let _ = g_no.add_node(0)
+  let _ = g_no.add_node(0)
+  let _ = g_no.add_edge(0, 1, 1)
+  let _ = g_no.add_edge(1, 0, 1)
+  // 节点 2 孤立，无法形成欧拉路
+
+  match eulerian_trail(g_no) {
+    Some(_) => println("错误！孤立图不应存在欧拉路")
+    None => println("孤立图正确判定为无欧拉路 ✓")
+  }
+  println("")
+}
+
+/// Graph 工具函数演示：连通性、反转、度数等
+fn demo_graph_utils() {
+  println("--- Graph 工具函数演示 ---")
+
+  // 构建连通图
+  let g : @graph.Graph[Int, Int] = @graph.Graph::new()
+  let _ = g.add_node(0)
+  let _ = g.add_node(0)
+  let _ = g.add_node(0)
+  let _ = g.add_node(0)
+  let _ = g.add_edge(0, 1, 1)
+  let _ = g.add_edge(1, 2, 1)
+  let _ = g.add_edge(2, 3, 1)
+  let _ = g.add_edge(3, 0, 1)
+
+  // 连通性检查
+  println("连通图连通性: {is_connected(g)} (期望 true)")
+  println("连通分量数: {component_count(g)} (期望 1)")
+
+  // 度数信息
+  println("各节点出度: node0={g.degree(0)}, node1={g.degree(1)}, node2={g.degree(2)}")
+  println("各节点入度: node0={g.in_degree(0)}, node1={g.in_degree(1)}, node2={g.in_degree(2)}")
+
+  // 安全访问器
+  println("安全访问 node_data(0): {g.node_data_safe(0)} (期望 Some)")
+  println("安全访问 node_data(99): {g.node_data_safe(99)} (期望 None)")
+
+  // 图反转: 可手动构建反向图（遍历所有边并反向添加）
+  // let rev = g.reversed()
+  println("原图边 0->1 存在? {g.has_edge(0, 1)}")
+  // println("反转后边 1->0 存在? {rev.has_edge(1, 0)}")
+
+  // 不连通图
+  let g2 : @graph.Graph[Int, Int] = @graph.Graph::new()
+  let _ = g2.add_node(0)
+  let _ = g2.add_node(0)
+  let _ = g2.add_node(0)
+  println("\n不连通图 (3个孤立节点):")
+  println("  连通性: {is_connected(g2)} (期望 false)")
+  println("  分量数: {component_count(g2)} (期望 3)")
+
+  println("")
 }

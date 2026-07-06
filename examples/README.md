@@ -6,8 +6,8 @@
 
 | 文件 | 演示内容 |
 |------|---------|
-| `shortest_path_demo.mbt` | Dijkstra、Bellman-Ford、Floyd-Warshall 最短路径 |
-| `advanced_demo.mbt` | Prim/Kruskal MST、Dinic/Edmonds-Karp 最大流、Kuhn 二分图匹配、Hierholzer 欧拉路 |
+| `shortest_path_demo.mbt` | Dijkstra、Bellman-Ford（含负环检测）、Floyd-Warshall（含路径还原） |
+| `advanced_demo.mbt` | Prim/Kruskal MST、Dinic/Edmonds-Karp 最大流、Kuhn 二分图匹配、Hierholzer 欧拉路、Graph 工具函数 |
 
 ## 运行方式
 
@@ -21,17 +21,35 @@ cp examples/advanced_demo.mbt src/traverse/
 # 2. 编译并运行
 moon run src/shortest_path/shortest_path_demo
 moon run src/traverse/advanced_demo
-
-# 3. 或直接编译测试全部代码
-moon build && moon test
 ```
 
 ## 快速验证
 
 ```bash
 # 一键测试所有算法
-moon test    # 应输出: 50 tests, all pass ✅
+moon test    # 50+ tests, all pass ✅
 
 # 编译检查
-moon build   # 应输出: Build OK (0 errors)
+moon build   # Build OK (0 errors)
+```
+
+## API 调用模式说明
+
+所有示例遵循统一的图构建模式：
+
+```
+// 1. 创建空图
+let g : @graph.Graph[Int, Int] = @graph.Graph::new()
+
+// 2. 添加节点（返回节点 id）
+let n0 = g.add_node(0)
+let n1 = g.add_node(0)
+
+// 3. 添加边 from -> to, weight（返回边 id）
+let e0 = g.add_edge(n0, n1, 5)
+
+// 4. 调用算法
+let result = dijkstra(g, n0)
+let mst = prim_mst(g)
+let flow = dinic_max_flow(g, source, sink)
 ```
