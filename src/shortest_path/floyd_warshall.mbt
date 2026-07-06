@@ -43,11 +43,14 @@ pub fn floyd_warshall(g : @graph.Graph[Int, Int]) -> (Array[Array[Int]], Array[A
 
 fn fw_get_edge(g : @graph.Graph[Int, Int], from : Int, to : Int) -> Int {
   let out_e = g.out_edges(from)
+  let mut best = 2147483647
   for i = 0; i < out_e.length(); i = i + 1 {
     let e = g.get_edge(out_e[i])
-    if e.to == to { return e.weight }
+    if e.to == to && e.weight < best {
+      best = e.weight
+    }
   }
-  2147483647
+  best
 }
 
 /// Reconstruct path from floyd_warshall next matrix.
