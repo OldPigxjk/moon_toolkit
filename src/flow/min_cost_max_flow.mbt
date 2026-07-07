@@ -1,3 +1,4 @@
+///|
 /// Min-Cost Max-Flow (successive shortest paths, SPFA-based).
 ///
 /// Computes a maximum flow from source `s` to sink `t`, and among all maximum
@@ -9,24 +10,24 @@
 ///
 /// Time complexity: O(F · E) in the common case (F = max flow value), where
 /// SPFA finds the cheapest augmenting path each round.
-
 priv struct MCMFEdge {
-  to: Int
-  cap: Int
-  cost: Int
-  flow: Int
-  rev: Int
+  to : Int
+  cap : Int
+  cost : Int
+  flow : Int
+  rev : Int
 }
 
+///|
 /// Solve min-cost max-flow.
 /// `edges` is a list of `(from, to, capacity, cost)` tuples.
 /// `s` is the source node id, `t` is the sink node id.
 /// Returns `(max_flow, min_cost)`.
 pub fn min_cost_max_flow(
-  n: Int,
-  edges: Array[(Int, Int, Int, Int)],
-  s: Int,
-  t: Int,
+  n : Int,
+  edges : Array[(Int, Int, Int, Int)],
+  s : Int,
+  t : Int,
 ) -> (Int, Int) {
   // Residual graph: graph[u] lists the indices of edges leaving u in `elist`.
   let graph : Array[Array[Int]] = []
@@ -39,7 +40,7 @@ pub fn min_cost_max_flow(
     // forward edge
     let fwd = elist.length()
     let rev = fwd + 1
-    elist.push({ to: v, cap: cap, cost: cost, flow: 0, rev: rev })
+    elist.push({ to: v, cap, cost, flow: 0, rev })
     // reverse (residual) edge with 0 capacity and negated cost
     elist.push({ to: u, cap: 0, cost: -cost, flow: 0, rev: fwd })
     graph[u].push(fwd)

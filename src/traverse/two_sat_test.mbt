@@ -1,14 +1,21 @@
+///|
 /// Tests for 2-SAT solver.
 
 // Decode a literal under an assignment: literal 2*i = ¬x_i, 2*i+1 = x_i.
-fn ts_val(assign: Array[Bool], lit: Int) -> Bool {
+fn ts_val(assign : Array[Bool], lit : Int) -> Bool {
   let i = lit / 2
   let positive = lit % 2 == 1
-  if positive { assign[i] } else { !assign[i] }
+  if positive {
+    assign[i]
+  } else {
+    !assign[i]
+  }
 }
 
 // Verify every clause is satisfied by the assignment.
-fn ts_check(clauses: Array[(Int, Int)], assign: Array[Bool]) -> Bool {
+
+///|
+fn ts_check(clauses : Array[(Int, Int)], assign : Array[Bool]) -> Bool {
   for c = 0; c < clauses.length(); c = c + 1 {
     let (a, b) = clauses[c]
     if !(ts_val(assign, a) || ts_val(assign, b)) {
@@ -24,8 +31,8 @@ test "two_sat_satisfiable" {
   let clauses = [(0, 3), (1, 4), (3, 5)]
   let r = two_sat_solve(3, clauses)
   match r {
-    Some(assign) => { assert_eq(ts_check(clauses, assign), true) }
-    None => { fail("instance is satisfiable") }
+    Some(assign) => assert_eq(ts_check(clauses, assign), true)
+    None => fail("instance is satisfiable")
   }
 }
 
@@ -47,7 +54,7 @@ test "two_sat_single_var_true" {
       assert_eq(assign[0], true)
       assert_eq(ts_check(clauses, assign), true)
     }
-    None => { fail("trivially satisfiable") }
+    None => fail("trivially satisfiable")
   }
 }
 
@@ -63,8 +70,8 @@ test "two_sat_four_vars" {
   ]
   let r = two_sat_solve(4, clauses)
   match r {
-    Some(assign) => { assert_eq(ts_check(clauses, assign), true) }
-    None => { fail("instance is satisfiable") }
+    Some(assign) => assert_eq(ts_check(clauses, assign), true)
+    None => fail("instance is satisfiable")
   }
 }
 

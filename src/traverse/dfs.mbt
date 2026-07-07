@@ -1,13 +1,15 @@
+///|
 /// DFS (Depth-First Search) traversal.
-
-pub fn dfs(g: @graph.Graph[Int, Int], start: Int) -> Array[Int] {
+pub fn dfs(g : @graph.Graph[Int, Int], start : Int) -> Array[Int] {
   let n = g.node_count()
   let visited = Array::make(n, false)
-  let result: Array[Int] = []
-  if start < 0 || start >= n { return result }
-  
-  let stack: Array[Int] = [start]
-  
+  let result : Array[Int] = []
+  if start < 0 || start >= n {
+    return result
+  }
+
+  let stack : Array[Int] = [start]
+
   while stack.length() > 0 {
     let node = stack[stack.length() - 1]
     if !visited[node] {
@@ -32,15 +34,18 @@ pub fn dfs(g: @graph.Graph[Int, Int], start: Int) -> Array[Int] {
   result
 }
 
+///|
 /// DFS postorder traversal.
-pub fn dfs_postorder(g: @graph.Graph[Int, Int], start: Int) -> Array[Int] {
+pub fn dfs_postorder(g : @graph.Graph[Int, Int], start : Int) -> Array[Int] {
   let n = g.node_count()
   let visited = Array::make(n, false)
-  let result: Array[Int] = []
-  if start < 0 || start >= n { return result }
-  
-  let stack: Array[Int] = [start]
-  
+  let result : Array[Int] = []
+  if start < 0 || start >= n {
+    return result
+  }
+
+  let stack : Array[Int] = [start]
+
   while stack.length() > 0 {
     let node = stack[stack.length() - 1]
     if !visited[node] {

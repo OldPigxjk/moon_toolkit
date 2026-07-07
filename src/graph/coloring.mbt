@@ -1,3 +1,4 @@
+///|
 /// Graph vertex coloring (greedy heuristics).
 ///
 /// A proper coloring assigns each vertex a color such that no two adjacent
@@ -9,7 +10,7 @@
 /// (colors start at 0). `chromatic_number` reports how many colors were used.
 
 // Build the undirected adjacency view of the graph (deduplicated).
-fn build_undirected(g: Graph[Int, Int]) -> Array[Array[Int]] {
+fn build_undirected(g : Graph[Int, Int]) -> Array[Array[Int]] {
   let n = g.node_count()
   let adj : Array[Array[Int]] = []
   for i = 0; i < n; i = i + 1 {
@@ -30,7 +31,8 @@ fn build_undirected(g: Graph[Int, Int]) -> Array[Array[Int]] {
   adj
 }
 
-fn contains(arr: Array[Int], x: Int) -> Bool {
+///|
+fn contains(arr : Array[Int], x : Int) -> Bool {
   for i = 0; i < arr.length(); i = i + 1 {
     if arr[i] == x {
       return true
@@ -39,10 +41,11 @@ fn contains(arr: Array[Int], x: Int) -> Bool {
   false
 }
 
+///|
 /// Welsh-Powell coloring: vertices are colored in order of descending degree
 /// (highest-degree first), each receiving the smallest color not used by an
 /// already-colored neighbor. Simple and fast; a strong practical heuristic.
-pub fn graph_coloring_welsh_powell(g: Graph[Int, Int]) -> Array[Int] {
+pub fn graph_coloring_welsh_powell(g : Graph[Int, Int]) -> Array[Int] {
   let n = g.node_count()
   let adj = build_undirected(g)
   let color : Array[Int] = Array::make(n, -1)
@@ -86,11 +89,12 @@ pub fn graph_coloring_welsh_powell(g: Graph[Int, Int]) -> Array[Int] {
   color
 }
 
+///|
 /// DSatur coloring: repeatedly colors the uncolored vertex with the highest
 /// *saturation degree* (number of distinct colors already present among its
 /// neighbors), breaking ties by largest degree. DSatur typically uses fewer
 /// colors than the basic Welsh-Powell heuristic.
-pub fn graph_coloring_dsatur(g: Graph[Int, Int]) -> Array[Int] {
+pub fn graph_coloring_dsatur(g : Graph[Int, Int]) -> Array[Int] {
   let n = g.node_count()
   let adj = build_undirected(g)
   let color : Array[Int] = Array::make(n, -1)
@@ -104,7 +108,8 @@ pub fn graph_coloring_dsatur(g: Graph[Int, Int]) -> Array[Int] {
     let mut best_deg = -1
     for i = 0; i < n; i = i + 1 {
       if color[i] == -1 {
-        if sat[i] > best_sat || (sat[i] == best_sat && adj[i].length() > best_deg) {
+        if sat[i] > best_sat ||
+          (sat[i] == best_sat && adj[i].length() > best_deg) {
           best = i
           best_sat = sat[i]
           best_deg = adj[i].length()
@@ -156,8 +161,9 @@ pub fn graph_coloring_dsatur(g: Graph[Int, Int]) -> Array[Int] {
   color
 }
 
+///|
 /// Number of colors used by a coloring (max color index + 1).
-pub fn chromatic_number(colors: Array[Int]) -> Int {
+pub fn chromatic_number(colors : Array[Int]) -> Int {
   let mut max_c = -1
   for i = 0; i < colors.length(); i = i + 1 {
     if colors[i] > max_c {
@@ -167,9 +173,10 @@ pub fn chromatic_number(colors: Array[Int]) -> Int {
   max_c + 1
 }
 
+///|
 /// Verify that `colors` is a proper coloring of `g` (no adjacent vertices
 /// share a color). Returns true if proper.
-pub fn is_proper_coloring(g: Graph[Int, Int], colors: Array[Int]) -> Bool {
+pub fn is_proper_coloring(g : Graph[Int, Int], colors : Array[Int]) -> Bool {
   let n = g.node_count()
   for u = 0; u < n; u = u + 1 {
     let out = g.out_edges(u)

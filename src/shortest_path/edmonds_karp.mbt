@@ -1,10 +1,14 @@
+///|
 /// Edmonds-Karp maximum flow algorithm.
 /// Returns the maximum flow value from `source` to `sink`, or None if inputs are invalid.
 /// Uses BFS to find augmenting paths and updates residual capacities.
 ///
 /// Time complexity: O(V * E^2) where V = node count, E = edge count.
-
-pub fn edmonds_karp(g : @graph.Graph[Int, Int], source : Int, sink : Int) -> Int? {
+pub fn edmonds_karp(
+  g : @graph.Graph[Int, Int],
+  source : Int,
+  sink : Int,
+) -> Int? {
   let n = g.node_count()
   if source < 0 || source >= n || sink < 0 || sink >= n || source == sink {
     return None

@@ -1,3 +1,4 @@
+///|
 /// A* (A-star) single-source shortest path search guided by a heuristic.
 ///
 /// `heuristic(u)` must return a NON-NEGATIVE estimate of the remaining cost
@@ -13,17 +14,21 @@
 ///
 /// Edge weights must be non-negative (negative weights are skipped).
 pub fn astar(
-  g: @graph.Graph[Int, Int],
-  start: Int,
-  goal: Int,
-  heuristic: (Int) -> Int,
+  g : @graph.Graph[Int, Int],
+  start : Int,
+  goal : Int,
+  heuristic : (Int) -> Int,
 ) -> (Array[Int], Array[Int]) {
   let n = g.node_count()
   let dist = Array::make(n, 2147483647)
   let pred = Array::make(n, -1)
 
-  if start < 0 || start >= n { return (dist, pred) }
-  if goal < 0 || goal >= n { return (dist, pred) }
+  if start < 0 || start >= n {
+    return (dist, pred)
+  }
+  if goal < 0 || goal >= n {
+    return (dist, pred)
+  }
 
   dist[start] = 0
   pred[start] = start

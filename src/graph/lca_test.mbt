@@ -16,17 +16,14 @@ test "lca_chain" {
 ///|
 test "lca_balanced" {
   // Root 0; children 1,2; 1's children 3,4; 2's children 5,6.
-  let g = graph_from_edges(
-    7,
-    [
-      (0, 1, 1),
-      (0, 2, 1),
-      (1, 3, 1),
-      (1, 4, 1),
-      (2, 5, 1),
-      (2, 6, 1),
-    ],
-  )
+  let g = graph_from_edges(7, [
+    (0, 1, 1),
+    (0, 2, 1),
+    (1, 3, 1),
+    (1, 4, 1),
+    (2, 5, 1),
+    (2, 6, 1),
+  ])
   let l = LCA::from_tree(g, 0)
   assert_eq(l.query(3, 4), 1)
   assert_eq(l.query(5, 6), 2)

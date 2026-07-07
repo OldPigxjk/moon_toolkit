@@ -1,3 +1,4 @@
+///|
 /// Network/graph centrality measures.
 ///
 /// Centrality quantifies the "importance" of a vertex. Three classic measures
@@ -12,7 +13,7 @@
 // BFS distances from source `s`. Returns (distances, reachable_count) where
 // `distances[v]` is the BFS distance (1 per edge) and `reachable_count` counts
 // vertices other than `s` that are reachable.
-fn bfs_distances(g: @graph.Graph[Int, Int], s: Int) -> (Array[Int], Int) {
+fn bfs_distances(g : @graph.Graph[Int, Int], s : Int) -> (Array[Int], Int) {
   let n = g.node_count()
   let dist : Array[Int] = Array::make(n, 2147483647)
   dist[s] = 0
@@ -36,16 +37,13 @@ fn bfs_distances(g: @graph.Graph[Int, Int], s: Int) -> (Array[Int], Int) {
   (dist, reach)
 }
 
+///|
 /// Degree centrality of every vertex: (total degree) / (n - 1).
 /// For directed graphs the total degree is in-degree + out-degree.
-pub fn degree_centrality(g: @graph.Graph[Int, Int]) -> Array[Double] {
+pub fn degree_centrality(g : @graph.Graph[Int, Int]) -> Array[Double] {
   let n = g.node_count()
   let res : Array[Double] = []
-  let denom = if n > 1 {
-    n - 1
-  } else {
-    1
-  }
+  let denom = if n > 1 { n - 1 } else { 1 }
   for i = 0; i < n; i = i + 1 {
     let d = g.degree(i) + g.in_degree(i)
     res.push(d.to_double() / denom.to_double())
@@ -53,11 +51,12 @@ pub fn degree_centrality(g: @graph.Graph[Int, Int]) -> Array[Double] {
   res
 }
 
+///|
 /// Closeness centrality of every vertex (normalized Wasserman-Faust variant):
 ///   C(u) = reach(u) / sum_dist(u) * reach(u) / (n - 1)
 /// where reach(u) is the number of other vertices reachable from u.
 /// A vertex that cannot reach any other returns 0.
-pub fn closeness_centrality(g: @graph.Graph[Int, Int]) -> Array[Double] {
+pub fn closeness_centrality(g : @graph.Graph[Int, Int]) -> Array[Double] {
   let n = g.node_count()
   let res : Array[Double] = []
   for s = 0; s < n; s = s + 1 {
@@ -75,18 +74,19 @@ pub fn closeness_centrality(g: @graph.Graph[Int, Int]) -> Array[Double] {
       res.push(0.0)
     } else {
       let r = reach.to_double()
-      let cl = (r / sum.to_double()) * (r / (n - 1).to_double())
+      let cl = r / sum.to_double() * (r / (n - 1).to_double())
       res.push(cl)
     }
   }
   res
 }
 
+///|
 /// Betweenness centrality of every vertex (Brandes' algorithm, unweighted).
 /// For each vertex v, C_B(v) estimates the fraction of all shortest paths
 /// (between every ordered pair of vertices) that pass through v.
 /// Note: computed for a DIRECTED graph; for undirected inputs divide by 2.
-pub fn betweenness_centrality(g: @graph.Graph[Int, Int]) -> Array[Double] {
+pub fn betweenness_centrality(g : @graph.Graph[Int, Int]) -> Array[Double] {
   let n = g.node_count()
   let bc : Array[Double] = Array::make(n, 0.0)
 
@@ -132,7 +132,7 @@ pub fn betweenness_centrality(g: @graph.Graph[Int, Int]) -> Array[Double] {
       let pw = pred[w]
       for i = 0; i < pw.length(); i = i + 1 {
         let v = pw[i]
-        let c = (sigma[v].to_double() / sigma[w].to_double()) * (1.0 + delta[w])
+        let c = sigma[v].to_double() / sigma[w].to_double() * (1.0 + delta[w])
         delta[v] = delta[v] + c
       }
       if w != s {

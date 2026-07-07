@@ -1,9 +1,9 @@
+///|
 /// Tarjan's Strongly Connected Components algorithm.
 /// Returns an array of SCCs, where each SCC is an array of node ids.
 /// The SCCs are returned in reverse topological order of the SCC DAG.
 ///
 /// Time complexity: O(V + E) where V = node count, E = edge count.
-
 pub fn tarjan_scc(g : @graph.Graph[Int, Int]) -> Array[Array[Int]] {
   let n = g.node_count()
   if n == 0 {
@@ -60,9 +60,7 @@ pub fn tarjan_scc(g : @graph.Graph[Int, Int]) -> Array[Array[Int]] {
               done = true
             }
           }
-          None => {
-            done = true
-          }
+          None => done = true
         }
       }
       result.push(scc)

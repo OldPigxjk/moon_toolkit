@@ -6,9 +6,10 @@
 /// tuples — handy when generating test fixtures or loading results from
 /// algorithms such as min-cost max-flow.
 
+///|
 /// Export the graph to a Graphviz DOT string (directed graph).
 /// Each edge is rendered as `  u -> v [label="weight"];`.
-pub fn to_dot(g: Graph[Int, Int]) -> String {
+pub fn to_dot(g : Graph[Int, Int]) -> String {
   let mut s = "digraph G {\n"
   let n = g.node_count()
   for u = 0; u < n; u = u + 1 {
@@ -22,10 +23,11 @@ pub fn to_dot(g: Graph[Int, Int]) -> String {
   s
 }
 
+///|
 /// Build a graph with `n` nodes from a list of (from, to, weight) tuples.
 pub fn graph_from_edges(
-  n: Int,
-  edges: Array[(Int, Int, Int)],
+  n : Int,
+  edges : Array[(Int, Int, Int)],
 ) -> Graph[Int, Int] {
   let g : Graph[Int, Int] = Graph::new()
   for i = 0; i < n; i = i + 1 {

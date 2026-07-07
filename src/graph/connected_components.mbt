@@ -1,7 +1,8 @@
+///|
 /// Connected components of the UNDIRECTED view of the graph.
 
 // Build undirected (deduplicated) adjacency lists.
-fn cc_adj(g: Graph[Int, Int]) -> Array[Array[Int]] {
+fn cc_adj(g : Graph[Int, Int]) -> Array[Array[Int]] {
   let n = g.node_count()
   let adj : Array[Array[Int]] = []
   for i = 0; i < n; i = i + 1 {
@@ -34,10 +35,11 @@ fn cc_adj(g: Graph[Int, Int]) -> Array[Array[Int]] {
   adj
 }
 
+///|
 /// Return a component-id array: `comp[v]` is the 0-based id of the connected
 /// component containing vertex v. The number of components equals
 /// `max(comp) + 1`.
-pub fn connected_components(g: Graph[Int, Int]) -> Array[Int] {
+pub fn connected_components(g : Graph[Int, Int]) -> Array[Int] {
   let n = g.node_count()
   let adj = cc_adj(g)
   let comp : Array[Int] = Array::make(n, -1)
@@ -65,8 +67,9 @@ pub fn connected_components(g: Graph[Int, Int]) -> Array[Int] {
   comp
 }
 
+///|
 /// Number of connected components (undirected view).
-pub fn count_components(g: Graph[Int, Int]) -> Int {
+pub fn count_components(g : Graph[Int, Int]) -> Int {
   let n = g.node_count()
   if n == 0 {
     return 0
@@ -81,7 +84,8 @@ pub fn count_components(g: Graph[Int, Int]) -> Int {
   mx + 1
 }
 
+///|
 /// Whether the undirected view of the graph is a single connected component.
-pub fn is_connected(g: Graph[Int, Int]) -> Bool {
+pub fn is_connected(g : Graph[Int, Int]) -> Bool {
   count_components(g) == 1
 }

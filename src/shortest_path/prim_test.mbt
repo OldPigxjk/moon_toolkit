@@ -8,14 +8,14 @@ test "prim_mst_basic" {
   let _ = g.add_node(0)
   let _ = g.add_node(0)
   let _ = g.add_node(0)
-  
+
   let _ = g.add_edge(0, 1, 1)
   let _ = g.add_edge(1, 0, 1) // Undirected edge
   let _ = g.add_edge(1, 2, 2)
   let _ = g.add_edge(2, 1, 2) // Undirected edge
   let _ = g.add_edge(0, 2, 4)
   let _ = g.add_edge(2, 0, 4) // Undirected edge
-  
+
   let result = prim_mst(g)
   match result {
     Some(mst_edges) => {
@@ -37,13 +37,12 @@ test "prim_mst_basic" {
 test "prim_mst_single_node" {
   let g : @graph.Graph[Int, Int] = @graph.Graph::new()
   let _ = g.add_node(0)
-  
+
   let result = prim_mst(g)
   match result {
-    Some(mst_edges) => {
+    Some(mst_edges) =>
       // Single node, no edges
       assert_eq(mst_edges.length(), 0)
-    }
     None => fail("Expected Some(mst_edges), got None")
   }
 }
@@ -54,7 +53,7 @@ test "prim_mst_disconnected" {
   let g : @graph.Graph[Int, Int] = @graph.Graph::new()
   let _ = g.add_node(0)
   let _ = g.add_node(0)
-  
+
   let result = prim_mst(g)
   // Graph is disconnected, should return None
   match result {

@@ -1,7 +1,8 @@
+///|
 /// Spectral / random-walk centrality measures.
 
 // True if `x` already appears in `arr` (adjacency deduplication helper).
-fn contains_adj(arr: Array[Int], x: Int) -> Bool {
+fn contains_adj(arr : Array[Int], x : Int) -> Bool {
   for i = 0; i < arr.length(); i = i + 1 {
     if arr[i] == x {
       return true
@@ -10,6 +11,7 @@ fn contains_adj(arr: Array[Int], x: Int) -> Bool {
   false
 }
 
+///|
 /// PageRank centrality via power iteration.
 ///
 /// For damping factor `d` (typically 0.85) and `n` vertices:
@@ -19,10 +21,10 @@ fn contains_adj(arr: Array[Int], x: Int) -> Bool {
 /// convergence threshold (iteration stops early once met). The returned scores
 /// sum to (approximately) 1.
 pub fn pagerank(
-  g: @graph.Graph[Int, Int],
-  damping: Double,
-  iterations: Int,
-  tol: Double,
+  g : @graph.Graph[Int, Int],
+  damping : Double,
+  iterations : Int,
+  tol : Double,
 ) -> Array[Double] {
   let n = g.node_count()
   if n == 0 {
@@ -69,7 +71,8 @@ pub fn pagerank(
       next.push(acc)
     }
     for i = 0; i < n; i = i + 1 {
-      diff = diff + (if next[i] > pr[i] { next[i] - pr[i] } else { pr[i] - next[i] })
+      diff = diff +
+        (if next[i] > pr[i] { next[i] - pr[i] } else { pr[i] - next[i] })
     }
     pr = next
     iter = iter + 1
@@ -80,6 +83,7 @@ pub fn pagerank(
   pr
 }
 
+///|
 /// Eigenvector centrality via power iteration (graph treated as UNDIRECTED).
 ///
 /// At each step `x <- A_sym * x`, then `x` is renormalized by its max entry.
@@ -87,8 +91,8 @@ pub fn pagerank(
 /// recovered, so a vertex's score grows with the centrality of its neighbors.
 /// Vertices with no incident edges converge to 0.
 pub fn eigenvector_centrality(
-  g: @graph.Graph[Int, Int],
-  iterations: Int,
+  g : @graph.Graph[Int, Int],
+  iterations : Int,
 ) -> Array[Double] {
   let n = g.node_count()
   if n == 0 {

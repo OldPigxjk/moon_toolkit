@@ -1,13 +1,17 @@
+///|
 /// Articulation points (cut vertices) and bridges in an undirected graph.
 /// Uses Tarjan's DFS-based algorithm.
 /// Time complexity: O(V + E).
 ///
 /// Input Graph edges are treated as undirected.
 /// Returns: (is_articulation[], bridge_list[])
-
-pub fn articulation_points_and_bridges(g : @graph.Graph[Int, Int]) -> (Array[Bool], Array[(Int, Int)]) {
+pub fn articulation_points_and_bridges(
+  g : @graph.Graph[Int, Int],
+) -> (Array[Bool], Array[(Int, Int)]) {
   let n = g.node_count()
-  if n == 0 { return ([], []) }
+  if n == 0 {
+    return ([], [])
+  }
 
   // Step1: declare all variables
   let visited : Array[Bool] = Array::make(n, false)
@@ -45,7 +49,6 @@ pub fn articulation_points_and_bridges(g : @graph.Graph[Int, Int]) -> (Array[Boo
         if low[v] > disc[u] {
           bridges.push((u, v))
         }
-
       } else if v != par {
         low[u] = if low[u] < disc[v] { low[u] } else { disc[v] }
       }

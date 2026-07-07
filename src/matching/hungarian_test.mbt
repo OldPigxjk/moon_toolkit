@@ -1,7 +1,8 @@
+///|
 /// Test for the Hungarian assignment algorithm
 
 // Verify `a` is a valid permutation of 0..n-1.
-fn is_perm(a: Array[Int]) -> Bool {
+fn is_perm(a : Array[Int]) -> Bool {
   let n = a.length()
   let seen : Array[Bool] = Array::make(n, false)
   for i = 0; i < n; i = i + 1 {

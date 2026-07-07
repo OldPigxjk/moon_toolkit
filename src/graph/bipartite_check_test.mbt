@@ -13,7 +13,7 @@ test "bipartite_even_cycle" {
       assert_eq(col[2] != col[3], true)
       assert_eq(col[3] != col[0], true)
     }
-    None => { fail("even cycle should be bipartite") }
+    None => fail("even cycle should be bipartite")
   }
 }
 
@@ -37,7 +37,7 @@ test "bipartite_tree" {
       assert_eq(col[2], col[3])
       assert_eq(col[0] != col[1], true)
     }
-    None => { fail("tree should be bipartite") }
+    None => fail("tree should be bipartite")
   }
 }
 
@@ -47,14 +47,20 @@ test "bipartite_single_node" {
   assert_eq(is_bipartite(g), true)
   let c = bipartite_coloring(g)
   match c {
-    Some(col) => { assert_eq(col[0], 0) }
-    None => { fail("single node should be bipartite") }
+    Some(col) => assert_eq(col[0], 0)
+    None => fail("single node should be bipartite")
   }
 }
 
 ///|
 test "bipartite_odd_cycle" {
   // 5-cycle is NOT bipartite.
-  let g = graph_from_edges(5, [(0, 1, 1), (1, 2, 1), (2, 3, 1), (3, 4, 1), (4, 0, 1)])
+  let g = graph_from_edges(5, [
+    (0, 1, 1),
+    (1, 2, 1),
+    (2, 3, 1),
+    (3, 4, 1),
+    (4, 0, 1),
+  ])
   assert_eq(is_bipartite(g), false)
 }

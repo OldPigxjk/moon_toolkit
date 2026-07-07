@@ -55,13 +55,12 @@ test "johnson_matches_floyd_positive" {
   let (fw, _) = floyd_warshall(g)
   match jr {
     None => fail("Expected Some")
-    Some(d) => {
+    Some(d) =>
       for i = 0; i < 4; i = i + 1 {
         for k = 0; k < 4; k = k + 1 {
           assert_eq(d[i][k], fw[i][k])
         }
       }
-    }
   }
 }
 

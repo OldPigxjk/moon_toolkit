@@ -39,7 +39,7 @@ test "astar_admissible_heuristic" {
   let _ = g.add_edge(1, 3, 5)
   let _ = g.add_edge(2, 3, 1)
 
-  let h = fn(v: Int) -> Int {
+  let h = fn(v : Int) -> Int {
     if v == 0 {
       4
     } else if v == 1 {

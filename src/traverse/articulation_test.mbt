@@ -8,9 +8,9 @@ test "articulation_basic_bridge" {
   let n2 = g.add_node(2)
   // Add undirected edges as pairs of directed edges
   let _ = g.add_edge(n0, n1, 1)
-  let _ = g.add_edge(n1, n0, 1)  // reverse
+  let _ = g.add_edge(n1, n0, 1) // reverse
   let _ = g.add_edge(n1, n2, 1)
-  let _ = g.add_edge(n2, n1, 1)  // reverse
+  let _ = g.add_edge(n2, n1, 1) // reverse
 
   let (ap, bridges) = articulation_points_and_bridges(g)
 
@@ -28,9 +28,12 @@ test "articulation_no_cut_vertex" {
   let n0 = g.add_node(0)
   let n1 = g.add_node(1)
   let n2 = g.add_node(2)
-  let _ = g.add_edge(n0, n1, 1); let _ = g.add_edge(n1, n0, 1)
-  let _ = g.add_edge(n1, n2, 1); let _ = g.add_edge(n2, n1, 1)
-  let _ = g.add_edge(n2, n0, 1); let _ = g.add_edge(n0, n2, 1)
+  let _ = g.add_edge(n0, n1, 1)
+  let _ = g.add_edge(n1, n0, 1)
+  let _ = g.add_edge(n1, n2, 1)
+  let _ = g.add_edge(n2, n1, 1)
+  let _ = g.add_edge(n2, n0, 1)
+  let _ = g.add_edge(n0, n2, 1)
 
   let (ap, bridges) = articulation_points_and_bridges(g)
   assert_eq(ap[0], false)
@@ -54,7 +57,7 @@ test "articulation_complex" {
   let n3 = g.add_node(3)
   let n4 = g.add_node(4)
 
-  fn add_undirected(g: @graph.Graph[Int, Int], a: Int, b: Int) -> Unit {
+  fn add_undirected(g : @graph.Graph[Int, Int], a : Int, b : Int) -> Unit {
     let _ = g.add_edge(a, b, 1)
     let _ = g.add_edge(b, a, 1)
   }

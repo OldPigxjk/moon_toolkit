@@ -14,7 +14,7 @@ test "floyd_warshall_basic" {
   let (dist, nxt) = floyd_warshall(g)
   assert_eq(dist[0][0], 0)
   assert_eq(dist[0][1], 1)
-  assert_eq(dist[0][2], 3)  // 0->1->2 = 3, not direct 4
+  assert_eq(dist[0][2], 3) // 0->1->2 = 3, not direct 4
   assert_eq(dist[1][2], 2)
 
   // Path reconstruction
@@ -31,8 +31,8 @@ test "floyd_warshall_disconnected" {
   let _ = g.add_node(0)
   let _ = g.add_node(1)
   let (dist, _) = floyd_warshall(g)
-  assert_eq(dist[0][1], 2147483647)  // unreachable
-  assert_eq(dist[1][0], 2147483647)  // unreachable
+  assert_eq(dist[0][1], 2147483647) // unreachable
+  assert_eq(dist[1][0], 2147483647) // unreachable
 }
 
 ///|
@@ -46,5 +46,5 @@ test "floyd_warshall_negative_edge" {
   let _ = g.add_edge(n1, n2, 5)
   let _ = g.add_edge(n0, n2, 100)
   let (dist, _) = floyd_warshall(g)
-  assert_eq(dist[0][2], 2)  // 0->1(-3) + 1->2(5) = 2 < 100
+  assert_eq(dist[0][2], 2) // 0->1(-3) + 1->2(5) = 2 < 100
 }

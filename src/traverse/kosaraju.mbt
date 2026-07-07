@@ -1,3 +1,4 @@
+///|
 /// Kosaraju's algorithm for finding Strongly Connected Components (SCCs).
 ///
 /// A strongly connected component is a maximal set of vertices where every
@@ -6,10 +7,10 @@
 
 // First DFS pass: record vertices in order of finishing time.
 fn dfs_kos_1(
-  u: Int,
-  adj: Array[Array[Int]],
-  visited: Array[Bool],
-  order: Array[Int],
+  u : Int,
+  adj : Array[Array[Int]],
+  visited : Array[Bool],
+  order : Array[Int],
 ) -> Unit {
   visited[u] = true
   let nbrs = adj[u]
@@ -23,11 +24,13 @@ fn dfs_kos_1(
 }
 
 // Second DFS pass: explore the reversed graph to collect one SCC.
+
+///|
 fn dfs_kos_2(
-  u: Int,
-  radj: Array[Array[Int]],
-  visited: Array[Bool],
-  comp: Array[Int],
+  u : Int,
+  radj : Array[Array[Int]],
+  visited : Array[Bool],
+  comp : Array[Int],
 ) -> Unit {
   visited[u] = true
   comp.push(u)
@@ -40,9 +43,10 @@ fn dfs_kos_2(
   }
 }
 
+///|
 /// Return the list of strongly connected components.
 /// Each component is an array of vertex ids.
-pub fn kosaraju_scc(g: @graph.Graph[Int, Int]) -> Array[Array[Int]] {
+pub fn kosaraju_scc(g : @graph.Graph[Int, Int]) -> Array[Array[Int]] {
   let n = g.node_count()
   let adj : Array[Array[Int]] = []
   let radj : Array[Array[Int]] = []
@@ -84,8 +88,9 @@ pub fn kosaraju_scc(g: @graph.Graph[Int, Int]) -> Array[Array[Int]] {
   comps
 }
 
+///|
 /// Return a component-id array: `ids[v]` is the 0-based SCC index of vertex v.
-pub fn kosaraju_component_ids(g: @graph.Graph[Int, Int]) -> Array[Int] {
+pub fn kosaraju_component_ids(g : @graph.Graph[Int, Int]) -> Array[Int] {
   let comps = kosaraju_scc(g)
   let n = g.node_count()
   let ids : Array[Int] = Array::make(n, -1)

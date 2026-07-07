@@ -1,7 +1,8 @@
+///|
 /// Cycle detection for directed and undirected graphs.
 
 // Build directed adjacency lists from the graph.
-fn build_adj(g: @graph.Graph[Int, Int]) -> Array[Array[Int]] {
+fn build_adj(g : @graph.Graph[Int, Int]) -> Array[Array[Int]] {
   let n = g.node_count()
   let adj : Array[Array[Int]] = []
   for i = 0; i < n; i = i + 1 {
@@ -17,7 +18,9 @@ fn build_adj(g: @graph.Graph[Int, Int]) -> Array[Array[Int]] {
 }
 
 // Build undirected (deduplicated) adjacency lists from the graph.
-fn build_undirected_adj(g: @graph.Graph[Int, Int]) -> Array[Array[Int]] {
+
+///|
+fn build_undirected_adj(g : @graph.Graph[Int, Int]) -> Array[Array[Int]] {
   let n = g.node_count()
   let adj : Array[Array[Int]] = []
   for i = 0; i < n; i = i + 1 {
@@ -38,7 +41,8 @@ fn build_undirected_adj(g: @graph.Graph[Int, Int]) -> Array[Array[Int]] {
   adj
 }
 
-fn contains_node(arr: Array[Int], x: Int) -> Bool {
+///|
+fn contains_node(arr : Array[Int], x : Int) -> Bool {
   for i = 0; i < arr.length(); i = i + 1 {
     if arr[i] == x {
       return true
@@ -48,11 +52,9 @@ fn contains_node(arr: Array[Int], x: Int) -> Bool {
 }
 
 // Directed DFS for back-edge detection (0=white, 1=gray, 2=black).
-fn dfs_cycle_dir(
-  u: Int,
-  adj: Array[Array[Int]],
-  color: Array[Int],
-) -> Bool {
+
+///|
+fn dfs_cycle_dir(u : Int, adj : Array[Array[Int]], color : Array[Int]) -> Bool {
   color[u] = 1
   let nbrs = adj[u]
   for i = 0; i < nbrs.length(); i = i + 1 {
@@ -70,8 +72,9 @@ fn dfs_cycle_dir(
   false
 }
 
+///|
 /// Detect whether the directed graph contains a directed cycle.
-pub fn has_cycle_directed(g: @graph.Graph[Int, Int]) -> Bool {
+pub fn has_cycle_directed(g : @graph.Graph[Int, Int]) -> Bool {
   let n = g.node_count()
   let adj = build_adj(g)
   let color : Array[Int] = Array::make(n, 0)
@@ -87,11 +90,13 @@ pub fn has_cycle_directed(g: @graph.Graph[Int, Int]) -> Bool {
 }
 
 // Undirected DFS for cycle detection (avoid the parent edge).
+
+///|
 fn dfs_cycle_undir(
-  u: Int,
-  parent: Int,
-  adj: Array[Array[Int]],
-  visited: Array[Bool],
+  u : Int,
+  parent : Int,
+  adj : Array[Array[Int]],
+  visited : Array[Bool],
 ) -> Bool {
   visited[u] = true
   let nbrs = adj[u]
@@ -108,8 +113,9 @@ fn dfs_cycle_undir(
   false
 }
 
+///|
 /// Detect whether the underlying undirected graph contains a cycle.
-pub fn has_cycle_undirected(g: @graph.Graph[Int, Int]) -> Bool {
+pub fn has_cycle_undirected(g : @graph.Graph[Int, Int]) -> Bool {
   let n = g.node_count()
   let adj = build_undirected_adj(g)
   let visited : Array[Bool] = Array::make(n, false)

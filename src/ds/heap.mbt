@@ -1,31 +1,40 @@
+///|
 /// MinHeap (binary heap) priority queue implementation.
 /// Used by Dijkstra's and Prim's algorithms.
 /// Always a min-heap keyed by priority (Int).
-
 struct HeapEntry[T] {
-  value: T
-  priority: Int
+  value : T
+  priority : Int
 }
 
+///|
 pub struct MinHeap[T] {
-  data: Array[HeapEntry[T]]
+  data : Array[HeapEntry[T]]
 }
 
+///|
 pub fn[T] MinHeap::new() -> MinHeap[T] {
   { data: [] }
 }
 
-pub fn[T] MinHeap::length(self: MinHeap[T]) -> Int {
+///|
+pub fn[T] MinHeap::length(self : MinHeap[T]) -> Int {
   self.data.length()
 }
 
-pub fn[T] MinHeap::is_empty(self: MinHeap[T]) -> Bool {
+///|
+pub fn[T] MinHeap::is_empty(self : MinHeap[T]) -> Bool {
   self.data.is_empty()
 }
 
-pub fn[T] MinHeap::push(self: MinHeap[T], value: T, priority: Int) -> MinHeap[T] {
+///|
+pub fn[T] MinHeap::push(
+  self : MinHeap[T],
+  value : T,
+  priority : Int,
+) -> MinHeap[T] {
   let heap = self
-  heap.data.push({ value: value, priority: priority })
+  heap.data.push({ value, priority })
   let mut i = heap.data.length() - 1
   while i > 0 {
     let parent = (i - 1) / 2
@@ -41,7 +50,8 @@ pub fn[T] MinHeap::push(self: MinHeap[T], value: T, priority: Int) -> MinHeap[T]
   heap
 }
 
-pub fn[T] MinHeap::pop(self: MinHeap[T]) -> (Option[T], MinHeap[T]) {
+///|
+pub fn[T] MinHeap::pop(self : MinHeap[T]) -> (T?, MinHeap[T]) {
   if self.data.is_empty() {
     (None, self)
   } else {
@@ -75,6 +85,11 @@ pub fn[T] MinHeap::pop(self: MinHeap[T]) -> (Option[T], MinHeap[T]) {
   }
 }
 
-pub fn[T] MinHeap::peek(self: MinHeap[T]) -> Option[T] {
-  if self.data.is_empty() { None } else { Some(self.data[0].value) }
+///|
+pub fn[T] MinHeap::peek(self : MinHeap[T]) -> T? {
+  if self.data.is_empty() {
+    None
+  } else {
+    Some(self.data[0].value)
+  }
 }

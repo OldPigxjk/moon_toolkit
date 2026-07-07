@@ -1,3 +1,4 @@
+///|
 /// 2-SAT solver via Strongly Connected Components (Kosaraju).
 ///
 /// Variables are x0, x1, ..., x_{n-1}. A literal is encoded as an integer:
@@ -10,16 +11,18 @@
 /// Time complexity: O(V + E) with V = 2n.
 
 // Negate a literal: flip the low bit.
-fn ts_neg(l: Int) -> Int {
-  if l % 2 == 0 { l + 1 } else { l - 1 }
+fn ts_neg(l : Int) -> Int {
+  if l % 2 == 0 {
+    l + 1
+  } else {
+    l - 1
+  }
 }
 
+///|
 /// Solve a 2-SAT instance.
 /// Returns `Some(assignment)` if satisfiable, `None` otherwise.
-pub fn two_sat_solve(
-  n: Int,
-  clauses: Array[(Int, Int)],
-) -> Array[Bool]? {
+pub fn two_sat_solve(n : Int, clauses : Array[(Int, Int)]) -> Array[Bool]? {
   let v = 2 * n
   let g : @graph.Graph[Int, Int] = @graph.Graph::new()
   for i = 0; i < v; i = i + 1 {

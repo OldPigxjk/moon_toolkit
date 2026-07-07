@@ -1,7 +1,8 @@
+///|
 /// Test for PageRank and eigenvector centrality
 
 // Absolute value of a Double (test helper).
-fn dabs(x: Double) -> Double {
+fn dabs(x : Double) -> Double {
   if x < 0.0 {
     -x
   } else {
@@ -10,7 +11,9 @@ fn dabs(x: Double) -> Double {
 }
 
 // Build a directed graph from a flat list of (u, v) edges.
-fn build_d(n: Int, edges: Array[(Int, Int)]) -> @graph.Graph[Int, Int] {
+
+///|
+fn build_d(n : Int, edges : Array[(Int, Int)]) -> @graph.Graph[Int, Int] {
   let g : @graph.Graph[Int, Int] = @graph.Graph::new()
   for i = 0; i < n; i = i + 1 {
     let _ = g.add_node(0)
@@ -23,7 +26,9 @@ fn build_d(n: Int, edges: Array[(Int, Int)]) -> @graph.Graph[Int, Int] {
 }
 
 // Build an undirected graph from a flat list of (u, v) edges.
-fn build_u(n: Int, edges: Array[(Int, Int)]) -> @graph.Graph[Int, Int] {
+
+///|
+fn build_u(n : Int, edges : Array[(Int, Int)]) -> @graph.Graph[Int, Int] {
   let g : @graph.Graph[Int, Int] = @graph.Graph::new()
   for i = 0; i < n; i = i + 1 {
     let _ = g.add_node(0)

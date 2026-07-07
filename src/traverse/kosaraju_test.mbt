@@ -1,7 +1,8 @@
+///|
 /// Test for Kosaraju's Strongly Connected Components algorithm
 
 // BFS reachability over directed out-edges (test helper).
-fn reachable_k(g: @graph.Graph[Int, Int], s: Int, t: Int) -> Bool {
+fn reachable_k(g : @graph.Graph[Int, Int], s : Int, t : Int) -> Bool {
   if s == t {
     return true
   }
@@ -30,7 +31,9 @@ fn reachable_k(g: @graph.Graph[Int, Int], s: Int, t: Int) -> Bool {
 }
 
 // Verify every pair within a component is mutually reachable.
-fn check_scc(g: @graph.Graph[Int, Int], comp: Array[Int]) -> Bool {
+
+///|
+fn check_scc(g : @graph.Graph[Int, Int], comp : Array[Int]) -> Bool {
   for a = 0; a < comp.length(); a = a + 1 {
     for b = a + 1; b < comp.length(); b = b + 1 {
       if !reachable_k(g, comp[a], comp[b]) {

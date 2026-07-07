@@ -19,9 +19,9 @@ test "dinic_basic" {
   let _ = g.add_edge(n4, n5, 4)
 
   match dinic_max_flow(g, n0, n5) {
-    Some(flow) => { assert_eq(flow, 23) }
-    None => { assert_eq(1, 0) }  // fail: should return Some
-  }
+    Some(flow) => assert_eq(flow, 23)
+    None => assert_eq(1, 0)
+  } // fail: should return Some
 }
 
 ///|
@@ -31,8 +31,8 @@ test "dinic_simple" {
   let t = g.add_node(1)
   let _ = g.add_edge(s, t, 2)
   match dinic_max_flow(g, s, t) {
-    Some(flow) => { assert_eq(flow, 2) }
-    None => { assert_eq(1, 0) }
+    Some(flow) => assert_eq(flow, 2)
+    None => assert_eq(1, 0)
   }
 }
 
@@ -43,7 +43,7 @@ test "dinic_no_path" {
   let t = g.add_node(1)
   // No edge between s and t, max flow = 0
   match dinic_max_flow(g, s, t) {
-    Some(flow) => { assert_eq(flow, 0) }
-    None => { assert_eq(1, 0) }
+    Some(flow) => assert_eq(flow, 0)
+    None => assert_eq(1, 0)
   }
 }

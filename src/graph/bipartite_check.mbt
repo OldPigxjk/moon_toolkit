@@ -1,7 +1,8 @@
+///|
 /// Bipartite (2-colorable) testing of the UNDIRECTED view of the graph.
 
 // Build undirected (deduplicated) adjacency lists.
-fn bc_adj(g: Graph[Int, Int]) -> Array[Array[Int]] {
+fn bc_adj(g : Graph[Int, Int]) -> Array[Array[Int]] {
   let n = g.node_count()
   let adj : Array[Array[Int]] = []
   for i = 0; i < n; i = i + 1 {
@@ -34,8 +35,9 @@ fn bc_adj(g: Graph[Int, Int]) -> Array[Array[Int]] {
   adj
 }
 
+///|
 /// Whether the undirected view of the graph is bipartite.
-pub fn is_bipartite(g: Graph[Int, Int]) -> Bool {
+pub fn is_bipartite(g : Graph[Int, Int]) -> Bool {
   let n = g.node_count()
   let adj = bc_adj(g)
   let color : Array[Int] = Array::make(n, -1)
@@ -63,9 +65,10 @@ pub fn is_bipartite(g: Graph[Int, Int]) -> Bool {
   true
 }
 
+///|
 /// If the graph is bipartite, return `Some(coloring)` where `coloring[v]` is
 /// 0 or 1. Returns `None` when the graph is not bipartite.
-pub fn bipartite_coloring(g: Graph[Int, Int]) -> Array[Int]? {
+pub fn bipartite_coloring(g : Graph[Int, Int]) -> Array[Int]? {
   let n = g.node_count()
   let adj = bc_adj(g)
   let color : Array[Int] = Array::make(n, -1)

@@ -1,18 +1,20 @@
+///|
 /// Lowest Common Ancestor (LCA) of a tree via binary lifting.
 ///
 /// `LCA::from_tree` builds the structure from a `Graph` treated as a tree
 /// rooted at `root` (the UNDIRECTED view of the graph must be a tree that
 /// contains `root`). `query(u, v)` returns the LCA of nodes `u` and `v`.
 /// Preprocessing O(n log n), each query O(log n).
-
 pub struct LCA {
-  up: Array[Array[Int]]
-  depth: Array[Int]
-  logn: Int
+  up : Array[Array[Int]]
+  depth : Array[Int]
+  logn : Int
 }
 
 // Undirected, deduplicated adjacency.
-fn lca_adj(g: Graph[Int, Int]) -> Array[Array[Int]] {
+
+///|
+fn lca_adj(g : Graph[Int, Int]) -> Array[Array[Int]] {
   let n = g.node_count()
   let adj : Array[Array[Int]] = []
   for i = 0; i < n; i = i + 1 {
@@ -45,12 +47,13 @@ fn lca_adj(g: Graph[Int, Int]) -> Array[Array[Int]] {
   adj
 }
 
+///|
 /// Build the binary-lifting LCA structure rooted at `root`.
-pub fn LCA::from_tree(g: Graph[Int, Int], root: Int) -> LCA {
+pub fn LCA::from_tree(g : Graph[Int, Int], root : Int) -> LCA {
   let n = g.node_count()
   let adj = lca_adj(g)
   let mut lg = 1
-  while (1 << lg) <= n {
+  while 1 << lg <= n {
     lg = lg + 1
   }
   let rows = lg
@@ -90,11 +93,12 @@ pub fn LCA::from_tree(g: Graph[Int, Int], root: Int) -> LCA {
       }
     }
   }
-  { up: up, depth: depth, logn: rows - 1 }
+  { up, depth, logn: rows - 1 }
 }
 
+///|
 /// Lift node `u` up by `d` steps (clamped at the root).
-fn LCA::lift(self: LCA, u: Int, d: Int) -> Int {
+fn LCA::lift(self : LCA, u : Int, d : Int) -> Int {
   let mut x = u
   let mut rem = d
   let mut k = 0
@@ -108,9 +112,10 @@ fn LCA::lift(self: LCA, u: Int, d: Int) -> Int {
   x
 }
 
+///|
 /// Return the lowest common ancestor of `u` and `v`.
 /// Returns -1 if either node is not reachable from the root (depth -1).
-pub fn LCA::query(self: LCA, u: Int, v: Int) -> Int {
+pub fn LCA::query(self : LCA, u : Int, v : Int) -> Int {
   if self.depth[u] < 0 || self.depth[v] < 0 {
     return -1
   }

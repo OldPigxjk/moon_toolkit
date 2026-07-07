@@ -18,10 +18,7 @@ test "mcmf_basic" {
 test "mcmf_negative_cost" {
   // 0->1 (cap 2, cost -3), 1->2 (cap 2, cost -2)
   // Max flow 2, total cost 2 * (-5) = -10.
-  let edges : Array[(Int, Int, Int, Int)] = [
-    (0, 1, 2, -3),
-    (1, 2, 2, -2),
-  ]
+  let edges : Array[(Int, Int, Int, Int)] = [(0, 1, 2, -3), (1, 2, 2, -2)]
   let (flow, cost) = min_cost_max_flow(3, edges, 0, 2)
   assert_eq(flow, 2)
   assert_eq(cost, -10)
@@ -30,10 +27,7 @@ test "mcmf_negative_cost" {
 ///|
 test "mcmf_unreachable" {
   // 0->1 and 2->3 are disconnected; s=0, t=3 unreachable.
-  let edges : Array[(Int, Int, Int, Int)] = [
-    (0, 1, 5, 1),
-    (2, 3, 5, 1),
-  ]
+  let edges : Array[(Int, Int, Int, Int)] = [(0, 1, 5, 1), (2, 3, 5, 1)]
   let (flow, cost) = min_cost_max_flow(4, edges, 0, 3)
   assert_eq(flow, 0)
   assert_eq(cost, 0)
@@ -42,7 +36,7 @@ test "mcmf_unreachable" {
 ///|
 test "mcmf_single_edge" {
   // Single edge 0->1 (cap 4, cost 3).
-  let edges : Array[(Int, Int, Int, Int)] = [ (0, 1, 4, 3) ]
+  let edges : Array[(Int, Int, Int, Int)] = [(0, 1, 4, 3)]
   let (flow, cost) = min_cost_max_flow(2, edges, 0, 1)
   assert_eq(flow, 4)
   assert_eq(cost, 12)

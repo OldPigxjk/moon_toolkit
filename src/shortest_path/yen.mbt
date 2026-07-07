@@ -1,3 +1,4 @@
+///|
 /// Yen's algorithm for the k shortest loopless paths between two nodes.
 ///
 /// Returns up to `k` distinct paths (as `(node_list, total_cost)` tuples),
@@ -5,7 +6,7 @@
 /// the returned array is shorter. Based on Dijkstra with edge/node blocking.
 
 // Adjacency list with weights: adj[u] = [(neighbor, weight), ...].
-fn build_adj_w(g: @graph.Graph[Int, Int]) -> Array[Array[(Int, Int)]] {
+fn build_adj_w(g : @graph.Graph[Int, Int]) -> Array[Array[(Int, Int)]] {
   let n = g.node_count()
   let adj : Array[Array[(Int, Int)]] = []
   for u = 0; u < n; u = u + 1 {
@@ -21,7 +22,9 @@ fn build_adj_w(g: @graph.Graph[Int, Int]) -> Array[Array[(Int, Int)]] {
 }
 
 // Weight of edge u->v, or 2147483647 if absent.
-fn ew(adj: Array[Array[(Int, Int)]], u: Int, v: Int) -> Int {
+
+///|
+fn ew(adj : Array[Array[(Int, Int)]], u : Int, v : Int) -> Int {
   let lst = adj[u]
   for i = 0; i < lst.length(); i = i + 1 {
     let (to, w) = lst[i]
@@ -32,7 +35,8 @@ fn ew(adj: Array[Array[(Int, Int)]], u: Int, v: Int) -> Int {
   2147483647
 }
 
-fn edge_blocked(be: Array[(Int, Int)], u: Int, v: Int) -> Bool {
+///|
+fn edge_blocked(be : Array[(Int, Int)], u : Int, v : Int) -> Bool {
   for i = 0; i < be.length(); i = i + 1 {
     let (a, b) = be[i]
     if a == u && b == v {
@@ -42,7 +46,8 @@ fn edge_blocked(be: Array[(Int, Int)], u: Int, v: Int) -> Bool {
   false
 }
 
-fn path_eq(a: Array[Int], b: Array[Int]) -> Bool {
+///|
+fn path_eq(a : Array[Int], b : Array[Int]) -> Bool {
   if a.length() != b.length() {
     return false
   }
@@ -56,13 +61,15 @@ fn path_eq(a: Array[Int], b: Array[Int]) -> Bool {
 
 // Dijkstra from src to dst, skipping blocked nodes and blocked edges.
 // Returns (path, cost) or None when dst is unreachable.
+
+///|
 fn spur_dijkstra(
-  adj: Array[Array[(Int, Int)]],
-  n: Int,
-  src: Int,
-  dst: Int,
-  blocked: Array[Bool],
-  blocked_edges: Array[(Int, Int)],
+  adj : Array[Array[(Int, Int)]],
+  n : Int,
+  src : Int,
+  dst : Int,
+  blocked : Array[Bool],
+  blocked_edges : Array[(Int, Int)],
 ) -> (Array[Int], Int)? {
   let dist : Array[Int] = Array::make(n, 2147483647)
   let pred : Array[Int] = Array::make(n, -1)
@@ -116,13 +123,14 @@ fn spur_dijkstra(
   Some((path, dist[dst]))
 }
 
+///|
 /// Compute up to `k` shortest loopless paths from `src` to `dst`.
 /// Each returned element is `(node_list, total_cost)`, ordered by cost.
 pub fn yen_k_shortest(
-  g: @graph.Graph[Int, Int],
-  src: Int,
-  dst: Int,
-  k: Int,
+  g : @graph.Graph[Int, Int],
+  src : Int,
+  dst : Int,
+  k : Int,
 ) -> Array[(Array[Int], Int)] {
   let result : Array[(Array[Int], Int)] = []
   if k <= 0 {

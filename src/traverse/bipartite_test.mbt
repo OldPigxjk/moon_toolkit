@@ -18,10 +18,10 @@ test "kuhn_basic" {
   // Optimal: U0-V0, U2-V1 => 2 matches (U1 unmatched)
   // Or: U1-V0, U2-V1 => 2 matches (U0 unmatched)
   // Max = 2
-  let adj: Array[Array[Int]] = [
-    [0],        // U0 -> V0
-    [0, 1],     // U1 -> V0, V1
-    [1],        // U2 -> V1
+  let adj : Array[Array[Int]] = [
+    [0], // U0 -> V0
+    [0, 1], // U1 -> V0, V1
+    [1], // U2 -> V1
   ]
   let (_, count) = kuhn_bipartite_match(adj, 3, 2)
   assert_eq(count, 2)
@@ -30,9 +30,9 @@ test "kuhn_basic" {
 ///|
 test "kuhn_perfect_matching" {
   // Complete bipartite K2,2: maximum matching should be 2
-  let adj: Array[Array[Int]] = [
-    [0, 1],   // U0 -> V0, V1
-    [0, 1],   // U1 -> V0, V1
+  let adj : Array[Array[Int]] = [
+    [0, 1], // U0 -> V0, V1
+    [0, 1], // U1 -> V0, V1
   ]
   let (_, count) = kuhn_bipartite_match(adj, 2, 2)
   assert_eq(count, 2)
@@ -41,7 +41,7 @@ test "kuhn_perfect_matching" {
 ///|
 test "kuhn_empty" {
   // No edges at all
-  let adj: Array[Array[Int]] = [[], []]
+  let adj : Array[Array[Int]] = [[], []]
   let (_, count) = kuhn_bipartite_match(adj, 2, 2)
   assert_eq(count, 0)
 }
@@ -50,13 +50,7 @@ test "kuhn_empty" {
 test "kuhn_larger" {
   // U0->V1, U1->V0,V2, U2->V1,V3, U3->V0,V3, U4->V2
   // Expected max = 4 (one of the 5 left nodes must be unmatched)
-  let adj: Array[Array[Int]] = [
-    [1],
-    [0, 2],
-    [1, 3],
-    [0, 3],
-    [2],
-  ]
+  let adj : Array[Array[Int]] = [[1], [0, 2], [1, 3], [0, 3], [2]]
   let (_, count) = kuhn_bipartite_match(adj, 5, 4)
   assert_eq(count, 4)
 }

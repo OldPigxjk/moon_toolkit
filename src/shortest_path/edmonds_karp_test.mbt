@@ -10,13 +10,13 @@ test "edmonds_karp_basic" {
   let _ = g.add_node(0) // node 1
   let _ = g.add_node(0) // node 2
   let _ = g.add_node(0) // node 3
-  
+
   let _ = g.add_edge(0, 1, 10)
   let _ = g.add_edge(0, 2, 10)
   let _ = g.add_edge(1, 2, 2)
   let _ = g.add_edge(1, 3, 4)
   let _ = g.add_edge(2, 3, 8)
-  
+
   let result = edmonds_karp(g, 0, 3)
   match result {
     Some(flow) => assert_eq(flow, 12) // Max flow should be 12
@@ -30,7 +30,7 @@ test "edmonds_karp_no_path" {
   let g : @graph.Graph[Int, Int] = @graph.Graph::new()
   let _ = g.add_node(0) // node 0
   let _ = g.add_node(0) // node 1
-  
+
   let result = edmonds_karp(g, 0, 1)
   match result {
     Some(flow) => assert_eq(flow, 0) // No path, flow should be 0
@@ -44,9 +44,9 @@ test "edmonds_karp_single_edge" {
   let g : @graph.Graph[Int, Int] = @graph.Graph::new()
   let _ = g.add_node(0) // node 0
   let _ = g.add_node(0) // node 1
-  
+
   let _ = g.add_edge(0, 1, 5)
-  
+
   let result = edmonds_karp(g, 0, 1)
   match result {
     Some(flow) => assert_eq(flow, 5) // Max flow should be 5

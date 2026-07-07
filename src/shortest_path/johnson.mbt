@@ -1,3 +1,4 @@
+///|
 /// Johnson's algorithm for all-pairs shortest paths.
 ///
 /// Supports graphs with NEGATIVE edge weights, provided there is NO
@@ -9,7 +10,7 @@
 /// Returns an n×n distance matrix `D` where `D[u][v]` is the shortest distance
 /// from `u` to `v` (2147483647 = unreachable). Returns `None` if a negative
 /// cycle is detected.
-pub fn johnson(g: @graph.Graph[Int, Int]) -> Array[Array[Int]]? {
+pub fn johnson(g : @graph.Graph[Int, Int]) -> Array[Array[Int]]? {
   let n = g.node_count()
   if n == 0 {
     return Some([])

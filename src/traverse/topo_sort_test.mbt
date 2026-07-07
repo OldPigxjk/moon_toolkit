@@ -7,10 +7,10 @@ test "topo_sort_basic" {
   let _ = g.add_node(0)
   let _ = g.add_node(0)
   let _ = g.add_node(0)
-  
+
   let _ = g.add_edge(0, 1, 1)
   let _ = g.add_edge(1, 2, 1)
-  
+
   let result = topo_kahn(g)
   match result {
     Some(order) => {
@@ -26,6 +26,7 @@ test "topo_sort_basic" {
   }
 }
 
+///|
 /// Helper function to find index of element in array
 fn array_index_of(arr : Array[Int], x : Int) -> Int {
   for i = 0; i < arr.length(); i = i + 1 {
@@ -44,12 +45,12 @@ test "topo_sort_dag" {
   let _ = g.add_node(0)
   let _ = g.add_node(0)
   let _ = g.add_node(0)
-  
+
   let _ = g.add_edge(0, 1, 1)
   let _ = g.add_edge(0, 2, 1)
   let _ = g.add_edge(1, 3, 1)
   let _ = g.add_edge(2, 3, 1)
-  
+
   let result = topo_kahn(g)
   match result {
     Some(order) => {
@@ -73,11 +74,11 @@ test "topo_sort_cycle" {
   let _ = g.add_node(0)
   let _ = g.add_node(0)
   let _ = g.add_node(0)
-  
+
   let _ = g.add_edge(0, 1, 1)
   let _ = g.add_edge(1, 2, 1)
   let _ = g.add_edge(2, 0, 1)
-  
+
   let result = topo_kahn(g)
   // Should detect cycle and return None
   match result {

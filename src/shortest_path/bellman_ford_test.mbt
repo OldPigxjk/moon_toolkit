@@ -7,11 +7,11 @@ test "bellman_ford_basic" {
   let _ = g.add_node(0)
   let _ = g.add_node(0)
   let _ = g.add_node(0)
-  
+
   let _ = g.add_edge(0, 1, 1)
   let _ = g.add_edge(1, 2, 2)
   let _ = g.add_edge(0, 2, 4)
-  
+
   let result = bellman_ford(g, 0)
   match result {
     Some((dist, _pred)) => {
@@ -31,11 +31,11 @@ test "bellman_ford_negative_weight" {
   let _ = g.add_node(0)
   let _ = g.add_node(0)
   let _ = g.add_node(0)
-  
+
   let _ = g.add_edge(0, 1, 1)
   let _ = g.add_edge(1, 2, -3)
   let _ = g.add_edge(0, 2, 4)
-  
+
   let result = bellman_ford(g, 0)
   match result {
     Some((dist, _pred)) => {
@@ -53,10 +53,10 @@ test "bellman_ford_negative_cycle" {
   let g : @graph.Graph[Int, Int] = @graph.Graph::new()
   let _ = g.add_node(0)
   let _ = g.add_node(0)
-  
+
   let _ = g.add_edge(0, 1, 1)
   let _ = g.add_edge(1, 0, -2)
-  
+
   let result = bellman_ford(g, 0)
   // Should detect negative cycle and return None
   match result {

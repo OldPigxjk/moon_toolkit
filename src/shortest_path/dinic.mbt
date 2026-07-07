@@ -1,17 +1,21 @@
+///|
 /// Dinic's maximum flow algorithm.
 /// Uses BFS level graph + DFS blocking flow.
 /// Time complexity: O(E * V^2), faster than Edmonds-Karp O(V * E^2).
-
 pub fn dinic_max_flow(g : @graph.Graph[Int, Int], s : Int, t : Int) -> Int? {
   let n = g.node_count()
-  if s == t || s < 0 || s >= n || t < 0 || t >= n { return None }
+  if s == t || s < 0 || s >= n || t < 0 || t >= n {
+    return None
+  }
 
   // Step 1: declare all variables
   let d_to : Array[Int] = []
   let d_rev : Array[Int] = []
   let d_cap : Array[Int] = []
   let d_adj : Array[Array[Int]] = []
-  for _i = 0; _i < n; _i = _i + 1 { d_adj.push([]) }
+  for _i = 0; _i < n; _i = _i + 1 {
+    d_adj.push([])
+  }
 
   let d_level : Array[Int] = Array::make(n, -1)
   let d_iter : Array[Int] = Array::make(n, 0)
@@ -21,15 +25,20 @@ pub fn dinic_max_flow(g : @graph.Graph[Int, Int], s : Int, t : Int) -> Int? {
   fn d_add_edge(fro : Int, tt : Int, c : Int) -> Unit {
     let ei_from = d_to.length()
     let ei_to = d_to.length() + 1
-    d_to.push(tt); d_to.push(fro)
-    d_rev.push(ei_to); d_rev.push(ei_from)
-    d_cap.push(c); d_cap.push(0)
+    d_to.push(tt)
+    d_to.push(fro)
+    d_rev.push(ei_to)
+    d_rev.push(ei_from)
+    d_cap.push(c)
+    d_cap.push(0)
     d_adj[fro].push(ei_from)
     d_adj[tt].push(ei_to)
   }
 
   fn d_bfs() -> Bool {
-    for i = 0; i < n; i = i + 1 { d_level[i] = -1 }
+    for i = 0; i < n; i = i + 1 {
+      d_level[i] = -1
+    }
     let q : Array[Int] = [s]
     d_level[s] = 0
     let mut head = 0
@@ -49,7 +58,9 @@ pub fn dinic_max_flow(g : @graph.Graph[Int, Int], s : Int, t : Int) -> Int? {
   }
 
   fn d_dfs(v : Int, f : Int) -> Int {
-    if v == t { return f }
+    if v == t {
+      return f
+    }
     let mut ii = d_iter[v]
     while ii < d_adj[v].length() {
       let ei = d_adj[v][ii]
@@ -80,10 +91,14 @@ pub fn dinic_max_flow(g : @graph.Graph[Int, Int], s : Int, t : Int) -> Int? {
 
   // Dinic main loop
   while d_bfs() {
-    for i = 0; i < n; i = i + 1 { d_iter[i] = 0 }
+    for i = 0; i < n; i = i + 1 {
+      d_iter[i] = 0
+    }
     while true {
       let pushed = d_dfs(s, 2147483647)
-      if pushed <= 0 { break }
+      if pushed <= 0 {
+        break
+      }
       d_flow = d_flow + pushed
     }
   }

@@ -1,17 +1,18 @@
+///|
 pub fn bellman_ford(
   g : @graph.Graph[Int, Int],
-  source : Int
+  source : Int,
 ) -> (Array[Int], Array[Int])? {
   let n = g.node_count()
   if source < 0 || source >= n {
     return None
   }
-  
+
   // Initialize distances and predecessors
   let dist : Array[Int] = Array::make(n, 2147483647)
   let pred : Array[Int] = Array::make(n, -1)
   dist[source] = 0
-  
+
   // Relax edges V-1 times
   for i = 0; i < n - 1; i = i + 1 {
     let mut updated = false
@@ -36,7 +37,7 @@ pub fn bellman_ford(
       break
     }
   }
-  
+
   // Check for negative cycles
   for u = 0; u < n; u = u + 1 {
     if dist[u] == 2147483647 {
@@ -54,6 +55,6 @@ pub fn bellman_ford(
       }
     }
   }
-  
+
   Some((dist, pred))
 }

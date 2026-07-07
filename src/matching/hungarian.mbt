@@ -1,3 +1,4 @@
+///|
 /// Hungarian algorithm (Kuhn–Munkres) for the linear assignment problem.
 ///
 /// Given an `n x n` cost matrix, finds a permutation `p` of the columns that
@@ -10,7 +11,7 @@
 
 // Core O(n^3) implementation on a square matrix. 1-indexed potentials are used
 // internally (arrays of size n+1) to mirror the classic formulation.
-fn hungarian_square(cost: Array[Array[Int]]) -> (Array[Int], Int) {
+fn hungarian_square(cost : Array[Array[Int]]) -> (Array[Int], Int) {
   let n = cost.length()
   if n == 0 {
     return ([], 0)
@@ -75,13 +76,15 @@ fn hungarian_square(cost: Array[Array[Int]]) -> (Array[Int], Int) {
   (assignment, total)
 }
 
+///|
 /// Return both the assignment and its total cost for a square cost matrix.
-pub fn hungarian_assignment(cost: Array[Array[Int]]) -> (Array[Int], Int) {
+pub fn hungarian_assignment(cost : Array[Array[Int]]) -> (Array[Int], Int) {
   hungarian_square(cost)
 }
 
+///|
 /// Return only the minimum total cost for a square cost matrix.
-pub fn hungarian_min_cost(cost: Array[Array[Int]]) -> Int {
+pub fn hungarian_min_cost(cost : Array[Array[Int]]) -> Int {
   let (_assign, total) = hungarian_square(cost)
   total
 }
