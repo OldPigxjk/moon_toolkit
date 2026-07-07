@@ -13,3 +13,6 @@ pkg.generated.mbti
 # Session helper scripts (not part of the library)
 do_commits.sh
 push_via_api.py
+
+# Local agent memory cache (not part of the library)
+.workbuddy_memory/
