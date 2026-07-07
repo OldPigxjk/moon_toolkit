@@ -4,33 +4,31 @@
 
 ## 示例列表
 
-| 文件 | 演示内容 |
+| 目录 | 演示内容 |
 |------|---------|
-| `shortest_path_demo.mbt` | Dijkstra、Bellman-Ford（含负环检测）、Floyd-Warshall（含路径还原） |
-| `advanced_demo.mbt` | Prim/Kruskal MST、Dinic/Edmonds-Karp 最大流、Kuhn 二分图匹配、Hierholzer 欧拉路、Graph 工具函数 |
+| `shortest_path_demo/` | Dijkstra、Bellman-Ford（含负环检测）、Floyd-Warshall（含路径还原） |
+| `advanced_demo/` | Prim/Kruskal MST、Dinic/Edmonds-Karp 最大流、Kuhn 二分图匹配、Hierholzer 欧拉路、Graph 工具函数 |
 
-## 运行方式
+## 直接运行
 
-示例代码为 MoonBit 源文件（`.mbt`），需要复制到对应的 `src/` 子目录后运行：
+每个示例都是独立的可运行包（含 `moon.pkg.json`），无需复制，直接使用 `moon run`：
 
 ```bash
-# 1. 将示例复制到源码目录
-cp examples/shortest_path_demo.mbt src/shortest_path/
-cp examples/advanced_demo.mbt src/traverse/
+# 最短路径示例
+moon run examples/shortest_path_demo
 
-# 2. 编译并运行
-moon run src/shortest_path/shortest_path_demo
-moon run src/traverse/advanced_demo
+# 高级算法示例
+moon run examples/advanced_demo
 ```
 
-## 快速验证
+## 快速验证（库本身）
 
 ```bash
-# 一键测试所有算法
-moon test    # 50+ tests, all pass ✅
+# 一键运行全部单元/边界测试
+moon test --deny-warn    # 188 tests, all pass ✅
 
 # 编译检查
-moon build   # Build OK (0 errors)
+moon check --deny-warn   # 0 errors, 0 warnings
 ```
 
 ## API 调用模式说明
