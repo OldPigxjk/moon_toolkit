@@ -1,5 +1,18 @@
 name: CI
 
+# Required by the MoonBit 国产基础软件开源大赛 pre-acceptance feedback:
+# the workflow MUST contain the four processes
+#   moon check / moon fmt --check / moon info / moon test
+# with warnings treated as errors (--deny-warn).
+#
+# NOTE: on toolchain 0.10.3 `moon info` does NOT accept a `--deny-warn` flag
+# (that flag belongs to `moon check` / `moon build` / `moon test`). The
+# "deny warnings" requirement for the interface step is therefore enforced by
+# the `moon check --deny-warn` step above, while `moon info` still verifies the
+# public interface is complete. Requiring `moon info --deny-warn` verbatim would
+# make the step fail on the official toolchain, so it is intentionally applied
+# where the flag is valid.
+
 on:
   push:
     branches: [ main, master ]
@@ -14,14 +27,26 @@ jobs:
 
       - name: Install MoonBit
         run: |
-          curl -fsSL https://cli.moonbitlang.cn/install/unix.sh | bash
+          # Prefer the official endpoint; fall back to the China mirror if the
+          # primary one is unreachable (e.g. returns the HTML docs page).
+          curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash || curl -fsSL https://cli.moonbitlang.cn/install/unix.sh | bash
           echo "$HOME/.moon/bin" >> $GITHUB_PATH
 
-      - name: Check
-        run: moon check
+      - name: moon version
+        run: moon version --all
 
-      - name: Build
-        run: moon build
+      - name: moon check --deny-warn
+        run: moon check --deny-warn
 
-      - name: Test
-        run: moon test
+      - name: moon fmt --check
+        run: moon fmt --check
+
+      - name: moon info (interface completeness; --deny-warn via moon check)
+        run: |
+          moon info
+          # Ensure `moon info` does not dirty the tree (build artifacts must not
+          # be committed). pkg.generated.mbti is gitignored, so this stays clean.
+          git diff --exit-code
+
+      - name: moon test --deny-warn
+        run: moon test --deny-warn

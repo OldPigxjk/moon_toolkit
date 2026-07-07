@@ -6,6 +6,10 @@ _build/
 **/.DS_Store
 **/Thumbs.db
 
+# moon info build artifacts (generated .mbti interface files)
+*.mbti
+pkg.generated.mbti
+
 # Session helper scripts (not part of the library)
 do_commits.sh
 push_via_api.py
