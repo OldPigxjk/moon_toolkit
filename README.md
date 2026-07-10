@@ -57,12 +57,17 @@ GitHub Actions CI 已包含 `moon check` / `moon fmt --check` / `moon info` / `m
 | 指标 | 数值 |
 |------|------|
 | 核心算法 / 数据结构 | 30+ |
-| 源文件（`.mbt`，非测试） | 37 个 |
+| 源文件（`.mbt`，非测试） | 44 个 |
 | 测试文件（`*_test.mbt`） | 42 个 |
 | MoonBit 代码总行数 | 6781 行（库 3827 + 测试 2954） |
 | 单元测试 | 188 项，**全部通过** |
 | 编译状态 | 0 警告 · 0 错误 |
 | 许可证 | Apache-2.0 |
+
+## 🔗 仓库
+
+- GitHub：https://github.com/OldPigxjk/moon_toolkit
+- GitLink：https://www.gitlink.org.cn/oldpig/moon_toolkit
 
 ## 📄 许可证
 
