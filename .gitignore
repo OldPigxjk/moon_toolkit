@@ -16,3 +16,6 @@ push_via_api.py
 
 # Local agent memory cache (not part of the library)
 .workbuddy_memory/
+
+# mooncakes local install/build cache
+.mooncakes/

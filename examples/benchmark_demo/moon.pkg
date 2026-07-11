@@ -1,0 +1,10 @@
+import {
+  "OldPigxjk/moon_toolkit/src/graph",
+  "OldPigxjk/moon_toolkit/src/shortest_path",
+  "OldPigxjk/moon_toolkit/src/traverse",
+  "OldPigxjk/moon_toolkit/src/ds",
+}
+
+options(
+  "is-main": true,
+)

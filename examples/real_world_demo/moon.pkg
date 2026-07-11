@@ -1,0 +1,9 @@
+import {
+  "OldPigxjk/moon_toolkit/src/graph",
+  "OldPigxjk/moon_toolkit/src/traverse",
+  "OldPigxjk/moon_toolkit/src/centrality",
+}
+
+options(
+  "is-main": true,
+)
