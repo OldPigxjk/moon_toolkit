@@ -12,7 +12,7 @@
 
 **6. 移植说明**：本项目为原创，不适用；参考来源均为公开教材/论文伪代码，已在源码与文档中标注。
 
-**7. GitHub 仓库链接**：https://github.com/OldPigxjk/moon_toolkit （45+ 有效 commits，远超过 10–20 要求，无空提交/无意义拆分）
+**7. GitHub 仓库链接**：https://github.com/OldPigxjk/moon_toolkit （47+ 有效 commits，远超问卷要求的 10 次有效提交下限，无空提交/无意义拆分）
 
 **8. GitLink 仓库链接**：https://www.gitlink.org.cn/oldpig/moon_toolkit （与 GitHub 同步，默认分支均为 main）
 

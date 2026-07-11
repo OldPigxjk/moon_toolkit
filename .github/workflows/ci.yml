@@ -1,9 +1,9 @@
 name: CI
 
 # Required by the MoonBit 国产基础软件开源大赛 pre-acceptance feedback:
-# the workflow MUST contain the four processes
-#   moon check / moon fmt --check / moon info / moon test
-# with warnings treated as errors (--deny-warn).
+# the workflow MUST cover the three required flows (验收标准5: 检查/构建/测试)
+# plus the supporting processes, all with warnings treated as errors (--deny-warn):
+#   moon check / moon build / moon fmt --check / moon info / moon test
 #
 # NOTE: on toolchain 0.10.3 `moon info` does NOT accept a `--deny-warn` flag
 # (that flag belongs to `moon check` / `moon build` / `moon test`). The
@@ -37,6 +37,9 @@ jobs:
 
       - name: moon check --deny-warn
         run: moon check --deny-warn
+
+      - name: moon build --deny-warn
+        run: moon build --deny-warn
 
       - name: moon fmt --check
         run: moon fmt --check

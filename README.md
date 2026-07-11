@@ -121,17 +121,17 @@ moon run examples/real_world_demo      # 真实场景：软件包依赖分析（
 moon run examples/benchmark_demo       # 性能基准：不同规模图上的可扩展性
 ```
 
-GitHub Actions CI 已包含 `moon check` / `moon fmt --check` / `moon info` / `moon test` 四个过程（均带 `--deny-warn`）。
+GitHub Actions CI 已包含 **五个过程**（均带 `--deny-warn`）：`moon check` / `moon build` / `moon fmt --check` / `moon info` / `moon test`，完整覆盖章程验收标准5 要求的「检查、构建、测试」。
 
 ## 📐 代码规模
 
 | 指标 | 数值 |
 |------|------|
-| 核心算法 / 数据结构 | 30+ |
+| 核心算法 / 数据结构 | 40+ |
 | 源文件（`.mbt`，非测试） | 41 个（src 37 + examples 4） |
-| 测试文件（`*_test.mbt`） | 42 个 |
+| 测试文件（`*_test.mbt`） | 43 个 |
 | 可运行示例 | 4 个（含真实场景 + 性能基准） |
-| MoonBit 代码总行数 | 7617 行（库 4663 + 测试 2954），落在章程 4~10k 参考区间 |
+| MoonBit 代码总行数 | 7834 行（库 4702 + 测试 3132），落在章程 4~10k 参考区间 |
 | 单元测试 | 191 项，**全部通过** |
 | 编译状态 | 0 警告 · 0 错误 |
 | 许可证 | Apache-2.0 |
@@ -140,6 +140,13 @@ GitHub Actions CI 已包含 `moon check` / `moon fmt --check` / `moon info` / `m
 
 - GitHub：https://github.com/OldPigxjk/moon_toolkit
 - GitLink：https://www.gitlink.org.cn/oldpig/moon_toolkit
+
+## 📚 参考与开源合规
+
+- **原创实现**：本库所有算法均为独立用 MoonBit 编写，未复制任何现有开源项目源码。
+- **参考来源**：算法思路参考 CLRS《算法导论》与 Tarjan 等经典论文的**公开伪代码**，已在源码注释与申报书中标注。
+- **生态差异化**：相比 mooncakes.io 现有 MoonGraph、moonpath 等，本项目独占 MST、网络最大流、Floyd-Warshall、二分图匹配、匈牙利指派、欧拉路、割点桥等能力，非简单重复。
+- **许可证**：采用 Apache-2.0（OSI 认证）；若后续移植/参考其他开源项目，将在此处补充原项目名、链接与许可证。
 
 ## 📄 许可证
 
