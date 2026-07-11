@@ -89,11 +89,36 @@ fn dijkstra_ops(g : @graph.Graph[Int, Int]) -> Int {
 }
 
 ///|
+/// 打印横向 ASCII 柱状图：把 `vals` 按最大值缩放到 `width` 个字符宽
+fn print_bars(ns : Array[Int], vals : Array[Int], label : String) -> Unit {
+  println(label)
+  let mut maxv = 1
+  for i = 0; i < vals.length(); i = i + 1 {
+    if vals[i] > maxv {
+      maxv = vals[i]
+    }
+  }
+  let width = 42
+  for i = 0; i < ns.length(); i = i + 1 {
+    let n = ns[i]
+    let v = vals[i]
+    let bar_len = v * width / maxv
+    let mut bar = ""
+    for _k = 0; _k < bar_len; _k = _k + 1 {
+      bar = bar + "#"
+    }
+    println("  N=\{n}: \{bar}  (\{v})")
+  }
+}
+
+///|
 fn main {
   println("=== moon_toolkit 可扩展性基准 (确定性随机图) ===\n")
   println("算法              | 节点 | 边    | 工作量指标")
   println("------------------|------|-------|--------------------------------")
 
+  let ns : Array[Int] = []
+  let ops : Array[Int] = []
   let sizes = [100, 500, 1000, 2000, 4000]
   for i = 0; i < sizes.length(); i = i + 1 {
     let n = sizes[i]
@@ -104,19 +129,28 @@ fn main {
     let _bfs = @traverse.bfs(g, 0)
 
     // Dijkstra 堆操作总量
-    let ops = dijkstra_ops(g)
+    let ops_val = dijkstra_ops(g)
 
     // Kruskal 排序+并查集规模
     let _mst = @shortest_path.kruskal_mst(g)
 
     println(
-      "BFS + Dijkstra    | \{n} | \{m}  | Dijkstra 堆操作 = \{ops} 次",
+      "BFS + Dijkstra    | \{n} | \{m}  | Dijkstra 堆操作 = \{ops_val} 次",
     )
+    ns.push(n)
+    ops.push(ops_val)
   }
+
+  // Dijkstra 堆操作量随规模增长的柱状图
+  print_bars(
+    ns, ops, "\nDijkstra 堆操作量（push+pop）随节点数增长：",
+  )
 
   // Floyd-Warshall 是 O(V^3)，核对理论松弛次数
   println("")
   println("Floyd-Warshall 全源最短路 (理论复杂度 O(V^3)):")
+  let fns : Array[Int] = []
+  let fupd : Array[Int] = []
   let fsizes = [50, 100, 150]
   for i = 0; i < fsizes.length(); i = i + 1 {
     let n = fsizes[i]
@@ -135,7 +169,12 @@ fn main {
     println(
       "  V=\{n}: 可达单元 \{updates} / 理论上限 V^3=\{theory} (O(V^3) 实现正确)",
     )
+    fns.push(n)
+    fupd.push(updates)
   }
+
+  // Floyd 可达单元数随规模增长的柱状图（应随 V^2 量级上升）
+  print_bars(fns, fupd, "\nFloyd-Warshall 可达单元数随节点数增长：")
 
   println(
     "\n✓ 随节点数从 100 增至 4000，算法稳定完成；堆操作量与松弛次数随规模单调增长，",

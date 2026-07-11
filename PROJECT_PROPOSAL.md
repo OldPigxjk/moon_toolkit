@@ -16,4 +16,4 @@
 
 **8. GitLink 仓库链接**：https://www.gitlink.org.cn/oldpig/moon_toolkit （与 GitHub 同步，默认分支均为 main）
 
-附：已发布至 mooncakes.io（`moon add OldPigxjk/moon_toolkit`），采用 Apache-2.0 许可证，CI 覆盖 check/build/test，188 项单元测试全部通过，提供 4 个可运行示例（含真实场景依赖分析 + 可扩展性基准）。
+附：已发布至 mooncakes.io（`moon add OldPigxjk/moon_toolkit`），采用 Apache-2.0 许可证，CI 覆盖 check/build/test，191 项单元测试全部通过，提供 4 个可运行示例（含真实场景依赖分析 + 可扩展性基准），并对最短路/最小生成树/最大流做了跨算法交叉验证。
