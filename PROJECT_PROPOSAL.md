@@ -1,52 +1,30 @@
 # moon_toolkit 项目申报书
 
-## 基本信息
-
 | 项目 | 内容 |
 |------|------|
-| 名称 | moon_toolkit — MoonBit 通用图算法工具箱 |
+| 名称 | moon_toolkit：MoonBit 通用图算法工具箱 |
 | 参赛者 | 徐健凯 |
 | 联系方式 | 18688611879 |
-| GitHub | https://github.com/OldPigxjk/moon_toolkit |
-| GitLink | https://gitlink.org.cn/oldpig/moon_toolkit |
-| 方向 | 基础数据结构与算法 / 图算法库 |
-| 原创性 | 原创，非移植 |
-
----
+| GitHub 仓库 | https://github.com/OldPigxjk/moon_toolkit |
+| GitLink 仓库 | https://www.gitlink.org.cn/oldpig/moon_toolkit |
+| 项目方向 | MoonBit 图算法库 / 算法教育工具 |
+| 是否为原创 | 是 |
 
 ## 项目简介
 
-MoonBit 生态通用图算法工具箱。提供泛型有向图 `Graph[N, E]` 及 **30+ 种**经典图论与基础算法的原生实现，覆盖遍历、最短路、最小生成树、网络流、匹配、连通性、着色、中心性与高级数据结构。配套完整单元测试（188 项，全部通过，0 警告 0 错误）。
+moon_toolkit 是一个用 MoonBit 编写的通用图算法工具箱，提供从基础数据结构到高级图算法的完整实现，面向 MoonBit 学习者、算法竞赛准备者及需要将图算法嵌入实际项目的 MoonBit 开发者。所有算法均配套完整单元测试（188 项测试全部通过），可直接作为 MoonBit 算法教学实践材料或实际项目的基础组件使用。
 
-mooncakes.io 上现有图算法包（如 MoonGraph、moonpath）主要覆盖遍历 / 最短路。本项目独有的最小生成树、网络流、全源最短路、二分图匹配、匈牙利指派、欧拉路、割点桥、强连通分量、2-SAT、传递闭包、LCA、图着色、中心性度量等能力形成互补而非重复。
+## 核心功能范围
 
-## 核心功能
+- 数据结构：泛型最小堆 MinHeap（push/pop/peek）、并查集 UnionFind（路径压缩 + 按秩合并）；
+- 图模型：泛型邻接表 Graph[N, E]，支持有向/无向，提供 add_node/add_edge/neighbors/degree 接口；
+- 图遍历：BFS、DFS、拓扑排序（Kahn + DFS 双实现）、Tarjan SCC、割点与桥检测、二分图最大匹配（Kuhn）、欧拉路/回路（Hierholzer）；
+- 最短路：Dijkstra（非负权）、Bellman-Ford（支持负权及负环检测）、Floyd-Warshall（全源最短路）；
+- 最小生成树：Prim（基于 MinHeap）、Kruskal（基于 UnionFind）；
+- 网络最大流：Edmonds-Karp、Dinic（BFS 分层 + DFS 阻塞流）。
 
-| 模块 | 算法 / 数据结构 |
-|------|-----------------|
-| 图结构 | 泛型有向图 Graph[N, E]、序列化、连通分量、传递闭包、LCA |
-| 遍历 | BFS、DFS、拓扑排序、Kosaraju/Tarjan SCC |
-| 最短路 | Dijkstra、Bellman-Ford、Floyd-Warshall、A*、Johnson 全源、Yen k 短路 |
-| 最小生成树 | Prim、Kruskal |
-| 网络流 | Edmonds-Karp、Dinic、最小费用最大流 |
-| 匹配 | Kuhn 二分图匹配、Hungarian 指派 |
-| 特殊图 | 欧拉路/欧拉环、割点 & 桥、环检测、二分图判定/着色、2-SAT、图着色（Welsh-Powell/DSATUR） |
-| 中心性 | 度/紧密/介数/特征向量中心性、PageRank |
-| 数据结构 | 并查集、最小堆、线段树（普通 + 懒标记）、稀疏表（RMQ） |
+## 移植或参考说明
 
-## 完成指标
-
-| 指标 | 数值 |
-|------|------|
-| 核心算法 / 数据结构 | 37 项 |
-| MoonBit 源码 | 4120 行（测试 2954 行，总计 7074 行） |
-| 单元测试 | **188 项，全部通过** |
-| 编译检查 | 0 警告 · 0 错误（`--deny-warn`） |
-| CI | GitHub Actions 四步：check / fmt / info / test |
-| 包发布 | mooncakes.io **v0.1.2**（`OldPigxjk/moon_toolkit`） |
-| 许可证 | Apache-2.0（OSI 认可） |
-| 提交记录 | **57 次**语义化提交，双仓库同步 |
-
-## 原创说明
-
-本项目为原创实现，非移植任何第三方开源项目。所有算法参考 CLRS《算法导论》等经典教材与 Wikipedia 技术文档，使用 MoonBit 泛型系统独立重写。核心设计：统一返回 `Option[T]` 避免 panic；全覆盖边界条件（平行边、负权、空图、单点、不可达、孤立点、非连通结构）；API 适配 MoonBit 包管理规范。
+- 参考资料：Cormen et al. Introduction to Algorithms（CLRS）第 3 版；Tarjan 原始论文及 Wikipedia 伪代码；
+- 实现方式：独立用 MoonBit 编写，未复制任何现有开源项目的源代码；
+- 与 mooncakes.io 现有图算法项目（MoonGraph、moonpath）相比，本项目新增了 6 个竞品没有的算法（MST、最大流、Floyd-Warshall、二分图匹配、欧拉路、割点桥），具有独立贡献价值。
