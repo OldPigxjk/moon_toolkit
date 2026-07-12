@@ -1,17 +1,18 @@
 name: CI
 
-# Required by the MoonBit 国产基础软件开源大赛 pre-acceptance feedback:
-# the workflow MUST cover the three required flows (验收标准5: 检查/构建/测试)
-# plus the supporting processes, all with warnings treated as errors (--deny-warn):
-#   moon check / moon build / moon fmt --check / moon info / moon test
+# Structure references the official MoonBit community workflow template:
+#   https://github.com/moonbit-community/.github/blob/main/workflow-templates/check.yml
+# (cross-platform matrix, persist-credentials:false, `moon update`, lint via
+#  `moon fmt`/`moon info` + `git diff --exit-code`).
 #
-# NOTE: on toolchain 0.10.3 `moon info` does NOT accept a `--deny-warn` flag
-# (that flag belongs to `moon check` / `moon build` / `moon test`). The
-# "deny warnings" requirement for the interface step is therefore enforced by
-# the `moon check --deny-warn` step above, while `moon info` still verifies the
-# public interface is complete. Requiring `moon info --deny-warn` verbatim would
-# make the step fail on the official toolchain, so it is intentionally applied
-# where the flag is valid.
+# On top of the template we additionally enforce the 大赛验收标准5 requirement
+# that CI must cover 检查 / 构建 / 测试 (check / build / test), all with warnings
+# treated as errors (`--deny-warn`).
+#
+# NOTE: on toolchain 0.10.3 `moon info` does NOT accept `--deny-warn` (that flag
+# is only valid for check / build / test); the "deny warnings" guarantee for the
+# interface step is covered by `moon check --deny-warn`, while `moon info` here
+# only verifies the public interface is complete and does not dirty the tree.
 
 on:
   push:
@@ -21,35 +22,54 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, macos-latest, windows-latest ]
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
-      - name: Install MoonBit
+      - name: Install MoonBit (Unix)
+        if: ${{ matrix.os != 'windows-latest' }}
         run: |
           # Prefer the official endpoint; fall back to the China mirror if the
-          # primary one is unreachable (e.g. returns the HTML docs page).
+          # primary one is unreachable.
           curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash || curl -fsSL https://cli.moonbitlang.cn/install/unix.sh | bash
           echo "$HOME/.moon/bin" >> $GITHUB_PATH
 
-      - name: moon version
-        run: moon version --all
+      - name: Install MoonBit (Windows)
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: |
+          Set-ExecutionPolicy RemoteSigned -Scope CurrentUser; irm https://cli.moonbitlang.com/install/powershell.ps1 | iex
+          "C:\Users\runneradmin\.moon\bin" | Out-File -FilePath $env:GITHUB_PATH -Append
 
+      - name: post install
+        run: |
+          moon version --all
+          moon update
+
+      # ---- 验收标准5: 检查 / 构建 / 测试 (all --deny-warn) ----
       - name: moon check --deny-warn
         run: moon check --deny-warn
 
       - name: moon build --deny-warn
         run: moon build --deny-warn
 
+      - name: moon test --deny-warn
+        run: moon test --deny-warn
+
+      # ---- lint: formatting + public interface completeness ----
       - name: moon fmt --check
         run: moon fmt --check
 
-      - name: moon info (interface completeness; --deny-warn via moon check)
+      - name: moon info (interface completeness)
+        if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
           moon info
-          # Ensure `moon info` does not dirty the tree (build artifacts must not
-          # be committed). pkg.generated.mbti is gitignored, so this stays clean.
+          # `moon info` must not dirty the tree (generated .mbti is gitignored).
           git diff --exit-code
-
-      - name: moon test --deny-warn
-        run: moon test --deny-warn

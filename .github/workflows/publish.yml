@@ -1,0 +1,49 @@
+name: publish-package
+
+# Adapted from the official MoonBit community template:
+#   https://github.com/moonbit-community/.github/blob/main/workflow-templates/publish.yml
+# Manual-only (workflow_dispatch) so it never affects the push/PR CI status.
+# To use: create a repo secret `MOONCAKES_TOKEN` holding the contents of your
+# ~/.moon/credentials.json (obtained via `moon login`), then run this workflow.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: install-ubuntu
+        run: |
+          curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash || curl -fsSL https://cli.moonbitlang.cn/install/unix.sh | bash
+          echo "$HOME/.moon/bin" >> $GITHUB_PATH
+
+      - name: post install
+        run: |
+          moon version --all
+          moon update
+
+      - name: prepublish check
+        run: |
+          moon check --deny-warn
+          moon test --deny-warn
+
+      - name: publish
+        env:
+          SECRET: ${{ secrets.MOONCAKES_TOKEN }}
+        shell: bash
+        run: |
+          if [ -z "$SECRET" ]; then
+            echo "Error: MOONCAKES_TOKEN secret is not set."
+            echo "Create it from your ~/.moon/credentials.json (moon login) and re-run."
+            exit 1
+          fi
+          echo "$SECRET" > ~/.moon/credentials.json
+          moon publish
+          rm ~/.moon/credentials.json
