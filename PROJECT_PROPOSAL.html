@@ -2,68 +2,79 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
+<title>moon_toolkit 项目申报书（可编辑版）</title>
 <style>
-  @page {
-    size: A4;
-    margin: 1.8cm 1.5cm;
+  @page { size: A4; margin: 14mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "SimSun", "宋体", serif; color:#1a1a1a; margin:0; padding:20px; background:#f4f4f4; }
+  .editbar { background:#fff8e1; border:1px solid #f0c36d; color:#7a5b00; padding:9px 13px; border-radius:6px;
+             font-family: "Microsoft YaHei", sans-serif; font-size:13px; margin:0 auto 14px; max-width:800px; line-height:1.6; }
+  .editbar b { color:#9a6b00; }
+  .page { background:#fff; max-width: 800px; margin: 0 auto; padding: 16mm 15mm; box-shadow:0 0 8px rgba(0,0,0,.15); }
+  h1 { text-align:center; font-size:21px; margin:0 0 6px; font-family:"SimHei","黑体",sans-serif; }
+  h2 { font-size:15px; border-bottom:1.5px solid #333; padding-bottom:3px; margin:16px 0 8px; font-family:"SimHei","黑体",sans-serif; }
+  table { border-collapse:collapse; width:100%; font-size:13px; }
+  table td { border:1px solid #666; padding:5px 8px; vertical-align:top; }
+  table td.k { background:#f0f0f0; width:118px; font-weight:bold; white-space:nowrap; }
+  p { font-size:13px; line-height:1.75; text-align:justify; margin:6px 0; }
+  ul { margin:6px 0; padding-left:20px; }
+  li { font-size:13px; line-height:1.7; margin:3px 0; }
+  [contenteditable="true"] { background:#fffde7; outline:1px dashed #e0b000; border-radius:3px; padding:1px 2px; }
+  [contenteditable="true"]:hover { background:#fff9c4; }
+  @media print {
+    body { background:#fff; padding:0; }
+    .editbar { display:none; }
+    .page { box-shadow:none; max-width:none; padding:0; margin:0; }
+    [contenteditable="true"] { background:transparent !important; outline:none !important; padding:0; }
+    h1, h2 { font-family:"SimHei","黑体",sans-serif; }
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: "SimSun", "STSong", "Noto Serif CJK SC", serif;
-    font-size: 10pt;
-    line-height: 1.55;
-    color: #111;
-    width: 100%;
-  }
-  h1 { text-align: center; font-size: 15pt; margin-bottom: 12px; letter-spacing: 1px; }
-  h2 { font-size: 11.5pt; border-top: 1.5pt solid #333; padding-top: 4px; margin: 10px 0 4px; }
-
-  /* 基本信息表格 */
-  table.info { width: 100%; border-collapse: collapse; margin-bottom: 6px; font-size: 10pt; }
-  .info td { border: 1px solid #666; padding: 3px 7px; }
-  .info td:first-child { width: 85px; background: #f5f5f5; font-weight: normal; white-space: nowrap; }
-  .info td:last-child { background: #fff; }
-
-  p.intro { text-indent: 2em; margin: 4px 0 8px; text-align: justify; }
-
-  ul { padding-left: 22px; margin: 3px 0; }
-  li { margin: 1.8px 0; text-align: justify; }
 </style>
 </head>
 <body>
+<div class="editbar">✏️ <b>编辑方法</b>：直接点击下方申报书里的任意文字就能改（黄底区域）。改完后按 <b>Ctrl+P</b> → 目标选「另存为 PDF」→ 纸张 A4 → 保存。打印时会自动隐藏本提示并去掉黄底，出来就是一页正式申报书。</div>
+<div class="page" contenteditable="true">
+  <h1>moon_toolkit 项目申报书</h1>
 
-<h1>moon_toolkit 项目申报书</h1>
+  <h2>基本信息</h2>
+  <table>
+    <tr><td class="k">项目名称</td><td>moon_toolkit —— MoonBit 通用图算法工具箱</td></tr>
+    <tr><td class="k">参赛者</td><td>徐健凯</td></tr>
+    <tr><td class="k">联系方式</td><td>18688611879 / oldpigxjk@gmail.com</td></tr>
+    <tr><td class="k">GitHub 链接</td><td>https://github.com/OldPigxjk/moon_toolkit （49 次有效提交）</td></tr>
+    <tr><td class="k">GitLink 链接</td><td>https://www.gitlink.org.cn/oldpig/moon_toolkit （与 GitHub 同步，默认分支均为 main）</td></tr>
+    <tr><td class="k">项目方向</td><td>MoonBit 图算法基础库 / 数据结构与算法基础设施</td></tr>
+    <tr><td class="k">是否为移植</td><td>否（原创实现）</td></tr>
+  </table>
 
-<h2>基本信息</h2>
-<table class="info">
-<tr><td>项目名称</td><td>moon_toolkit：MoonBit 通用图算法工具箱</td></tr>
-<tr><td>参赛者</td><td>徐健凯</td></tr>
-<tr><td>联系方式</td><td>18688611879</td></tr>
-<tr><td>GitHub 仓库</td><td>https://github.com/OldPigxjk/moon_toolkit</td></tr>
-<tr><td>GitLink 仓库</td><td>https://www.gitlink.org.cn/oldpig/moon_toolkit</td></tr>
-<tr><td>项目方向</td><td>MoonBit 图算法库 / 算法教育工具</td></tr>
-<tr><td>是否为原创</td><td>是</td></tr>
-</table>
+  <h2>项目简介</h2>
+  <p>moon_toolkit 是一套用 MoonBit 编写的通用图算法工具库，提供从基础图数据结构到高级图算法的完整原生实现。项目面向 MoonBit 学习者、算法竞赛准备者及需要在实际项目中嵌入图分析能力的开发者，涵盖最短路、最小生成树、网络流、匹配、遍历与连通性等经典算法领域，并提供真实场景依赖分析示例与可扩展性基准测试。所有算法均独立编写，参考 CLRS《算法导论》与 Tarjan 等经典论文的公开伪代码，未复制任何现有开源项目源码。</p>
 
-<h2>项目简介</h2>
-<p class="intro">moon_toolkit 是一个用 MoonBit 编写的通用图算法工具箱，提供从基础数据结构到高级图算法的完整实现，面向 MoonBit 学习者、算法竞赛准备者及需要将图算法嵌入实际项目的 MoonBit 开发者。所有算法均配套完整单元测试（191 项测试全部通过，并对最短路/最小生成树/最大流做了跨算法交叉验证），可直接作为 MoonBit 算法教学实践材料或实际项目的基础组件使用。</p>
+  <h2>核心功能范围</h2>
+  <ul>
+    <li>提供泛型 Graph 数据模型，支持有向/无向/加权图构建、边增删、节点度查询、邻接矩阵转换；</li>
+    <li>实现图遍历算法：BFS 广度优先搜索、DFS 深度优先搜索、Kahn 拓扑排序；</li>
+    <li>实现连通性分析：Kosaraju 强连通分量分解、Tarjan 割点与桥检测；</li>
+    <li>实现单源最短路：Dijkstra（含堆优化）、Bellman-Ford（含负环检测）、A* 启发式搜索；</li>
+    <li>实现全源最短路：Floyd-Warshall、Johnson（稀疏图加速）、Yen K 短路枚举；</li>
+    <li>实现最小生成树：Prim（含堆优化）、Kruskal（含并查集）；</li>
+    <li>实现网络最大流：Edmonds-Karp（BFS 增广）、Dinic（分层网络+当前弧优化）、最小费用最大流；</li>
+    <li>实现匹配算法：二分图最大匹配 Kuhn 匈牙利算法；</li>
+    <li>实现欧拉路与欧拉回路：Hierholzer 算法；</li>
+    <li>提供辅助算法：2-SAT 可满足性判定、传递闭包 Warshal、最近公共祖先 LCA、图着色（贪心 Welsh-Powell）；</li>
+    <li>提供中心性度量：PageRank 迭代排名、度中心性计算；</li>
+    <li>提供 DOT 格式序列化输出（兼容 Graphviz 渲染）；</li>
+    <li>提供 MinHeap 二叉堆、UnionFind 并查集等基础数据结构；</li>
+    <li>提供不少于 191 个单元测试，覆盖全部核心路径与边界条件，并对最短路/最小生成树/最大流做了跨算法交叉验证；</li>
+    <li>提供可运行示例：软件包依赖分析器与可扩展性性能基准；</li>
+    <li>已发布至 mooncakes.io（v0.1.2），Apache-2.0 许可证，CI 覆盖 check/build/test/fmt/info 三平台矩阵（ubuntu/macos/windows），持续集成通过。</li>
+  </ul>
 
-<h2>核心功能范围</h2>
-<ul>
-<li>数据结构：泛型最小堆 MinHeap（push/pop/peek）、并查集 UnionFind（路径压缩 + 按秩合并）；</li>
-<li>图模型：泛型邻接表 Graph[N, E]，支持有向/无向，提供 add_node/add_edge/neighbors/degree 接口；</li>
-<li>图遍历：BFS、DFS、拓扑排序（Kahn + DFS 双实现）、Tarjan SCC、割点与桥检测、二分图最大匹配（Kuhn）、欧拉路/回路（Hierholzer）；</li>
-<li>最短路：Dijkstra（非负权）、Bellman-Ford（支持负权及负环检测）、Floyd-Warshall（全源最短路）；</li>
-<li>最小生成树：Prim（基于 MinHeap）、Kruskal（基于 UnionFind）；</li>
-<li>网络最大流：Edmonds-Karp、Dinic（BFS 分层 + DFS 阻塞流）。</li>
-</ul>
-
-<h2>移植或参考说明</h2>
-<ul>
-<li>参考资料：Cormen et al. Introduction to Algorithms（CLRS）第 3 版；Tarjan 原始论文及 Wikipedia 伪代码；</li>
-<li>实现方式：独立用 MoonBit 编写，未复制任何现有开源项目的源代码；</li>
-<li>与 mooncakes.io 现有图算法项目（MoonGraph、moonpath）相比，本项目新增了 6 个竞品没有的算法（MST、最大流、Floyd-Warshall、二分图匹配、欧拉路、割点桥），具有独立贡献价值。</li>
-</ul>
-
+  <h2>移植或参考说明</h2>
+  <ul>
+    <li>参考来源：CLRS《算法导论》（Cormen et al.）、Tarjan 经典论文（SCC/割点桥）的公开伪代码</li>
+    <li>原创声明：所有代码独立用 MoonBit 编写，未复制任何现有开源项目源码</li>
+    <li>生态差异化：相比 mooncakes.io 现有 MoonGraph、moonpath、matrao 等图相关库，本库独占最小生成树、网络最大流、全源最短路、二分图匹配、欧拉路、割点与桥、中心性度量、DOT 序列化、交叉验证测试框架等能力</li>
+  </ul>
+</div>
 </body>
 </html>
