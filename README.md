@@ -129,9 +129,9 @@ GitHub Actions CI 已包含 **五个过程**（均带 `--deny-warn`）：`moon c
 |------|------|
 | 核心算法 / 数据结构 | 40+ |
 | 源文件（`.mbt`，非测试） | 41 个（src 37 + examples 4） |
-| 测试文件（`*_test.mbt`） | 43 个 |
+| 测试文件（`*_test.mbt`） | 43 个（含 6 个 `*_extra_test.mbt` 边界测试） |
 | 可运行示例 | 4 个（含真实场景 + 性能基准） |
-| MoonBit 代码总行数 | 7834 行（库 4702 + 测试 3132），落在章程 4~10k 参考区间 |
+| MoonBit 代码总行数 | 6959 行（库 3827 + 测试 3132），落在章程 4~10k 参考区间 |
 | 单元测试 | 191 项，**全部通过** |
 | 编译状态 | 0 警告 · 0 错误 |
 | 许可证 | Apache-2.0 |
@@ -147,6 +147,20 @@ GitHub Actions CI 已包含 **五个过程**（均带 `--deny-warn`）：`moon c
 - **参考来源**：算法思路参考 CLRS《算法导论》与 Tarjan 等经典论文的**公开伪代码**，已在源码注释与申报书中标注。
 - **生态差异化**：相比 mooncakes.io 现有 MoonGraph、moonpath 等，本项目独占 MST、网络最大流、Floyd-Warshall、二分图匹配、匈牙利指派、欧拉路、割点桥等能力，非简单重复。
 - **许可证**：采用 Apache-2.0（OSI 认证）；若后续移植/参考其他开源项目，将在此处补充原项目名、链接与许可证。
+
+## 🛡️ 正确性与边界测试保证
+
+针对图算法在**孤立点、非典型连通结构、自环、平行边**下的正确性风险，本库做了专项加固，并全部纳入 `moon test`（191/191 通过）：
+
+- **欧拉路 / 欧拉回路（`@traverse.eulerian`）**：
+  - 环（circuit）情形下起点选取「首个真正拥有出边的顶点」，避免 0 号孤立点污染搜索；
+  - 用 `path.length() == 总边数 + 1` 终校验，**拒绝非连通边集**（孤立边组返回 `None`）；
+  - 有向 / 无向两套实现分别覆盖自环、平行边、单条边、空图。
+  - 专项边界测试：`eulerian_isolated_vertex_before_cycle`、`eulerian_isolated_vertex_only`、`eulerian_trail_with_isolated_suffix`、`eulerian_disconnected_two_cycles`、`eulerian_self_loop`、`eulerian_parallel_edges` 等。
+- **最短路 / 最小生成树 / 最大流**：`cross_validation_test.mbt` 做三方对拍（Dijkstra/Bellman-Ford/Floyd-Warshall、Prim/Kruskal、Edmonds-Karp/Dinic），并校验路径还原性质。
+- **边界测试目录**：`graph/boundary_extra_test.mbt`、`shortest_path/boundary_extra_test.mbt`、`shortest_path/dijkstra_extra_test.mbt`、`shortest_path/floyd_warshall_extra_test.mbt`、`traverse/bfs_extra_test.mbt`、`traverse/boundary_extra_test.mbt` 等共 **6 个文件、36 项**边界用例，覆盖负权、负环、空图、单点、孤立节点、不连通分量等典型异常输入。
+
+> 所有加固均有对应失败用例复现（旧实现会在孤立点前导时选错起点 / 非连通边集误判为有欧拉路），修复后测试套件保持全绿。
 
 ## 📄 许可证
 
